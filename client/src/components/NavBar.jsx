@@ -10,7 +10,8 @@ Navbar,
 NavbarBrand,
 NavbarToggler,
 } from "reactstrap";
-import { logout } from "../managers/AuthManager";
+import { logout } from "../managers/authManager";
+
 
 
 export default function NavBar({ loggedInUser, setLoggedInUser }) {
@@ -22,7 +23,7 @@ return (
     <div>
     <Navbar color="light" light fixed="true" expand="lg">
         <NavbarBrand className="mr-auto" tag={RRNavLink} to="/">
-        🧹🧼House Rules
+        🖼️⏲️Memory Museum
         </NavbarBrand>
         {loggedInUser ? (
         <>
