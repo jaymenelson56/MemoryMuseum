@@ -6,6 +6,8 @@ namespace MemoryMuseum.Models;
 public class Item
 {
     public int Id { get; set; }
+    [DataType(DataType.Url)]
+    [MaxLength(255)]
     public string? Image { get; set; }
     [Required]
     public string Name { get; set; }
@@ -19,7 +21,7 @@ public class Item
     public bool NeedsApproval { get; set; }
     public bool Approved { get; set; }
     [ForeignKey(nameof(ExhibitId))]
-    public Exhibit Exhibit { get; set; }
+    public Exhibit? Exhibit { get; set; }
     [ForeignKey(nameof(UserProfileId))]
-    public UserProfile UserProfile { get; set; }
+    public UserProfile? UserProfile { get; set; }
 }

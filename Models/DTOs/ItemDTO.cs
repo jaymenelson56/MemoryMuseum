@@ -11,6 +11,6 @@ public class ItemDTO
     public DateTime DatePublished { get; set; }
     public bool NeedsApproval { get; set; }
     public bool Approved { get; set; }
-    public ExhibitDTO Exhibit { get; set; }
-    public UserProfileDTO UserProfile { get; set; }
+    public ExhibitDTO? Exhibit { get; set; }
+    public UserProfileDTO? UserProfile { get; set; }
 }
