@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { tryGetLoggedInUser } from "./managers/authManager";
-import { Spinner } from "reactstrap";
-import NavBar from "./components/NavBar";
+
+import { Navbar, Spinner } from "reactstrap";
+
 import ApplicationViews from "./components/ApplicationViews";
+import { tryGetLoggedInUser } from "./managers/authManager";
+
+
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState();
@@ -23,7 +26,7 @@ function App() {
 
   return (
     <>
-      <NavBar loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
+      <Navbar loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
       <ApplicationViews
         loggedInUser={loggedInUser}
         setLoggedInUser={setLoggedInUser}
