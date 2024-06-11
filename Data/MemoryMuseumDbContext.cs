@@ -9,6 +9,10 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
     private readonly IConfiguration _configuration;
 
     public DbSet<UserProfile> UserProfiles { get; set; }
+    public DbSet<Exhibit> Exhibits { get; set; }
+    public DbSet<Item> Items { get; set; }
+    public DbSet<Rating> Ratings { get; set; }
+    public DbSet<ExhibitRating> ExhibitRatings { get; set; }
 
     public MemoryMuseumDbContext(DbContextOptions<MemoryMuseumDbContext> context, IConfiguration config) : base(context)
     {
@@ -76,7 +80,7 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
         },
    });
 
-        
+
         modelBuilder.Entity<Exhibit>().HasData(new Exhibit[]
         {
         new Exhibit
@@ -93,7 +97,7 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
         },
         });
 
-        
+
         modelBuilder.Entity<Item>().HasData(new Item[]
         {
         new Item
@@ -146,7 +150,7 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
         },
         });
 
-        
+
         modelBuilder.Entity<Rating>().HasData(new Rating[]
         {
         new Rating
@@ -181,7 +185,7 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
         },
         });
 
-        
+
         modelBuilder.Entity<ExhibitRating>().HasKey(er => new { er.ExhibitId, er.RatingId, er.UserProfileId });
 
         modelBuilder.Entity<ExhibitRating>()
