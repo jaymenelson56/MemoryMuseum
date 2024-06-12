@@ -1,7 +1,7 @@
 
 
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getExhibitList } from "../../managers/exhibitManager";
 import { Button, Table } from "reactstrap";
 
@@ -33,7 +33,7 @@ export const ExhibitList = () => {
         <tbody>
             {exhibits.map((e) => (
                 <tr key={e.id}>
-                    <th scope="row">{`${e.name}`}</th>
+                    <th scope="row"><Link to={`/exhibits/${e.id}`}>{e.name}</Link></th>
                     <td>{e.userProfile.userName}</td>
                     <td>{e.averageRating} out of 5</td>
                 </tr>

@@ -1,6 +1,40 @@
+import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom";
+import { Card, CardBody, CardFooter, CardGroup, CardImg, CardLink, CardText, CardTitle } from "reactstrap";
+import { getExhibit } from "../../managers/exhibitManager";
+
 //Header
+export const ExhibitHall = () => {
+    const [exhibit, setExhibit] = useState();
 
+    const { id } = useParams();
 
+    useEffect(() => {
+        getExhibit(id).then(setExhibit);
+    }, [id]);
+
+    if(!exhibit) {
+        return null
+    }
+
+    return (
+        <>
+            <h2>{exhibit.name}</h2>
+            <CardGroup>
+                {exhibit.items.map((item) => (
+                    <Card key={item.id}>
+                        <CardBody>
+                            <CardImg src={item.image} alt={item.name} />
+                            <CardTitle>{item.name}</CardTitle>
+                            <CardText>{item.placard}</CardText>
+                            <CardFooter>{new Date(item.datePublished).toLocaleDateString()}</CardFooter>
+                        </CardBody>
+                    </Card>
+                ))}
+            </CardGroup>
+        </>
+    );
+};
 
 //Welcome Message
 
