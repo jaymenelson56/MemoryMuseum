@@ -41,7 +41,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           path=":id"
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
-              <ExhibitHall />
+              <ExhibitHall loggedInUser={loggedInUser} />
             </AuthorizedRoute>
           }
         />

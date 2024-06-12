@@ -20,3 +20,12 @@ export const newExhibit = async (exhibit) => {
     const data = await response.json();
     return data
 }
+
+export const deleteExhibit = async (id) => {
+    const response = await fetch(_apiUrl + `/${id}`, {
+        method:'DELETE'
+    });
+    if(!response.ok) {
+        throw new Error("Failed to delete exhibit");
+    }
+}
