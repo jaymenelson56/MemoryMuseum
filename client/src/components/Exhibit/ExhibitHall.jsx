@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Card, CardBody, CardFooter, CardGroup, CardImg, CardLink, CardText, CardTitle } from "reactstrap";
 import { getExhibit } from "../../managers/exhibitManager";
 
-//Header
+
 export const ExhibitHall = () => {
     const [exhibit, setExhibit] = useState();
 
@@ -36,9 +36,6 @@ export const ExhibitHall = () => {
     );
 };
 
-//Welcome Message
-
-//List Item as cards with image name and DatePublished,
 
 //Edit and Delete button will show up beneath the item if logged in user owns the exhibit
 
