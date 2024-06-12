@@ -5,6 +5,7 @@ import Register from "./auth/Register";
 import Home from "./Home";
 import { ExhibitList } from "./Exhibit/ExhibitList";
 import { ExhibitHall } from "./Exhibit/ExhibitHall";
+import { CreateExhibit } from "./Exhibit/CreateExhibit";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -41,6 +42,14 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
               <ExhibitHall />
+            </AuthorizedRoute>
+          }
+        />
+        <Route
+          path="create"
+          element={
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              <CreateExhibit loggedInUser={loggedInUser} />
             </AuthorizedRoute>
           }
         />
