@@ -161,4 +161,29 @@ public class ExhibitController : ControllerBase
         // Return the created exhibit
         return CreatedAtAction(nameof(GetExhibitById), new { id = newExhibit.Id }, newExhibit);
     }
+
+     [HttpDelete("{id}")]
+    //[Authorize]
+    public IActionResult DeleteExhibit(int id)
+    {
+        Exhibit exhibit = _dbContext.Exhibits
+            .Include(e => e.Items)
+            .Include(e => e.Ratings)
+            .FirstOrDefault(e => e.Id == id);
+
+        if (exhibit == null)
+        {
+            return NotFound();
+        }
+
+        // Remove the items and ratings associated with the exhibit
+        _dbContext.Items.RemoveRange(exhibit.Items);
+        _dbContext.ExhibitRatings.RemoveRange(exhibit.Ratings);
+
+        // Remove the exhibit itself
+        _dbContext.Exhibits.Remove(exhibit);
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
 }
