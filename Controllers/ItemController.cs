@@ -92,4 +92,44 @@ public class ItemController : ControllerBase
 
         return Ok(item);
     }
+    [HttpPut("{id}")]
+    //Authorize
+    public IActionResult UpdateItem(int id, [FromBody] ItemDTO itemDTO)
+    {
+        if (itemDTO == null || id != itemDTO.Id)
+        {
+            return BadRequest("Invalid item data");
+        }
+
+        Item existingItem = _dbContext.Items.Find(id);
+        if (existingItem == null)
+        {
+            return NotFound();
+        }
+
+        existingItem.Image = itemDTO.Image;
+        existingItem.Name = itemDTO.Name;
+        existingItem.Placard = itemDTO.Placard;
+
+        _dbContext.Entry(existingItem).State = EntityState.Modified;
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    //[Authorize]
+    public IActionResult DeleteItem(int id)
+    {
+        Item? existingItem = _dbContext.Items.Find(id);
+        if (existingItem == null)
+        {
+            return NotFound();
+        }
+
+        _dbContext.Items.Remove(existingItem);
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
 }
