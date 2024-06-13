@@ -1,5 +1,9 @@
 const _apiUrl = "/api/Exhibit";
 
+export const getExhibits = () => {
+    return fetch(_apiUrl).then((res) => res.json());
+};
+
 export const getExhibitList = () => {
     return fetch(_apiUrl + "/details").then((res) => res.json());
 };
