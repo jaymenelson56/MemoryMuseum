@@ -7,6 +7,7 @@ import { ExhibitList } from "./Exhibit/ExhibitList";
 import { ExhibitHall } from "./Exhibit/ExhibitHall";
 import { CreateExhibit } from "./Exhibit/CreateExhibit";
 import { CreateItem } from "./Items/CreateItem";
+import { ItemDetails } from "./Items/ItemDetails";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -61,6 +62,14 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
               <CreateItem loggedInUser={loggedInUser} />
+            </AuthorizedRoute>
+          }
+        />
+        <Route
+          path="details/:id"
+          element={
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              <ItemDetails loggedInUser={loggedInUser} />
             </AuthorizedRoute>
           }
         />

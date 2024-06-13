@@ -83,7 +83,8 @@ export const CreateItem = ({ loggedInUser }) => {
                         ))}
                     </Input>
                 </FormGroup>
-                <Button type="submit">Submit</Button>
+                <Button type="submit">Submit</Button><p> </p>
+                <Button type="button" onClick={handleBack}>Back</Button>
             </Form>
         </>
     )
