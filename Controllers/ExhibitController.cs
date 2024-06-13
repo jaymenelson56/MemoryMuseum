@@ -146,7 +146,7 @@ public class ExhibitController : ControllerBase
             return BadRequest("Exhibit data is null");
         }
 
-        // Create a new Exhibit entity from the DTO
+        
         Exhibit newExhibit = new Exhibit
         {
             Name = exhibitDTO.Name,
@@ -154,11 +154,11 @@ public class ExhibitController : ControllerBase
 
         };
 
-        // Add the new exhibit to the database context
+       
         _dbContext.Exhibits.Add(newExhibit);
         _dbContext.SaveChanges();
 
-        // Return the created exhibit
+        
         return CreatedAtAction(nameof(GetExhibitById), new { id = newExhibit.Id }, newExhibit);
     }
 
