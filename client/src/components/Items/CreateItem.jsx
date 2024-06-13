@@ -61,7 +61,7 @@ export const CreateItem = ({ loggedInUser }) => {
                 <FormGroup>
                     <Label>Placard</Label>
                     <Input
-                        type="text"
+                        type="textarea"
                         value={placard}
                         onChange={(e) => {
                             setPlacard(e.target.value);
