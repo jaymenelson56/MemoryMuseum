@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, CardFooter, CardGroup, CardImg, CardLink, CardText, CardTitle } from "reactstrap";
 import { deleteExhibit, getExhibit } from "../../managers/exhibitManager";
 
@@ -44,7 +44,9 @@ export const ExhibitHall = ({ loggedInUser }) => {
                             <CardImg src={item.image} alt={item.name} />
                             <CardTitle>{item.name}</CardTitle>
                             <CardText>{item.placard}</CardText>
-                            <CardFooter>{new Date(item.datePublished).toLocaleDateString()}</CardFooter>
+                            <CardFooter><Link to={`/item/details/${item.id}`}>
+                                More Info
+                            </Link></CardFooter>
                         </CardBody>
                     </Card>
                 ))}
@@ -61,3 +63,5 @@ export const ExhibitHall = ({ loggedInUser }) => {
 //Click on the item to bring up more details such as the original owner and placcard
 
 //Bottom of the page allows user to rate the exhibit, if the user has already rated it they will have a thank you for rating message
+
+//{new Date(item.datePublished).toLocaleDateString()}
