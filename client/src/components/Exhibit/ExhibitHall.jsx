@@ -52,7 +52,7 @@ export const ExhibitHall = ({ loggedInUser }) => {
 
     return (
         <>
-            <h2>{exhibit.name}</h2>
+            <h2>Welcome to{exhibit.name}</h2>
             {loggedInUser.id === exhibit.userProfileId && (
                 <div>
                     <Button color="danger" onClick={() => handleDelete(exhibit.id)}>Delete Exhibit</Button>
