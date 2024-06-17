@@ -9,5 +9,5 @@ public class RatingDTO
 
     [Range(1, 5, ErrorMessage = "The value must be between 1 and 5.")]
     public int Value { get; set; }
-    public List<ExhibitRatingDTO>? Ratings { get; set; }
+    public List<ExhibitRatingDTO>? ExhibitRatings { get; set; }
 }

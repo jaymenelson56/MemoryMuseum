@@ -21,7 +21,7 @@ public class UserProfileDTO
 
     public IdentityUser IdentityUser { get; set; }
     public List<ExhibitDTO>? Exhibits { get; set; }
-    public List<ExhibitRatingDTO>? Ratings { get; set; }
+    public List<ExhibitRatingDTO>? ExhibitRatings { get; set; }
     public string FullName
     {
         get

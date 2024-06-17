@@ -39,7 +39,12 @@ export const ExhibitList = () => {
                         <tr key={e.id}>
                             <th scope="row"><Link to={`/exhibits/${e.id}`}>{e.name}</Link></th>
                             <td>{e.userProfile.userName}</td>
-                            <td>{e.averageRating} out of 5</td>
+                            <td>
+                                {e.exhibitRatings.length > 0
+                                    ? `${e.averageRating} out of 5`
+                                    : "No ratings"
+                                }
+                            </td>
                         </tr>
                     ))}
                 </tbody>

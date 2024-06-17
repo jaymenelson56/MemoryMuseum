@@ -190,15 +190,15 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
 
         modelBuilder.Entity<ExhibitRating>()
             .HasOne(er => er.Exhibit)
-            .WithMany(e => e.Ratings)
+            .WithMany(e => e.ExhibitRatings)
             .HasForeignKey(er => er.ExhibitId);
         modelBuilder.Entity<ExhibitRating>()
             .HasOne(er => er.Rating)
-            .WithMany(r => r.Ratings)
+            .WithMany(r => r.ExhibitRatings)
             .HasForeignKey(er => er.RatingId);
         modelBuilder.Entity<ExhibitRating>()
             .HasOne(er => er.UserProfile)
-            .WithMany(up => up.Ratings)
+            .WithMany(up => up.ExhibitRatings)
             .HasForeignKey(er => er.UserProfileId);
     }
 }

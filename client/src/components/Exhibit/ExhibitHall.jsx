@@ -1,17 +1,22 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Button, Card, CardBody, CardFooter, CardGroup, CardImg, CardLink, CardText, CardTitle } from "reactstrap";
-import { deleteExhibit, getExhibit } from "../../managers/exhibitManager";
+import { Button, Card, CardBody, CardFooter, CardGroup, CardImg, CardLink, CardText, CardTitle, Form, FormGroup, Input, Label } from "reactstrap";
+import { NewRating, deleteExhibit, getExhibit } from "../../managers/exhibitManager";
+import { getRatings } from "../../managers/ratingManager";
 
 
 export const ExhibitHall = ({ loggedInUser }) => {
     const [exhibit, setExhibit] = useState();
+    const [ratings, setRatings] = useState([])
+    const [selectedRating, setSelectedRating] = useState(null);
+    const [buttonPressed, setButtonPressed] = useState(false)
 
     const { id } = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
         getExhibit(id).then(setExhibit);
+        getRatings().then(setRatings)
     }, [id]);
 
     if (!exhibit) {
@@ -27,6 +32,22 @@ export const ExhibitHall = ({ loggedInUser }) => {
                 console.error("Error deleting comment:", error);
             }
         }
+    }
+
+    const handleRatingChange = (event) => {
+        setSelectedRating(event.target.value);
+    };
+
+    const handleRatingSubmit = async (e) => {
+        e.preventDefault();
+        const ratingForm = {
+            ExhibitId: exhibit.id,
+            RatingId: selectedRating,
+            userProfileId: loggedInUser.id
+        };
+        await NewRating(ratingForm)
+        setButtonPressed(true)
+        getExhibit(id).then(setExhibit);
     }
 
     return (
@@ -51,16 +72,50 @@ export const ExhibitHall = ({ loggedInUser }) => {
                     </Card>
                 ))}
             </CardGroup>
+            <footer>
+                {loggedInUser.id === exhibit.userProfileId ? (
+                    <Card>
+                        <CardBody>
+                            <CardTitle>Your Exhibit's Average Rating: {exhibit.exhibitRatings.length > 0
+                                    ? `${exhibit.averageRating} out of 5`
+                                    : "No ratings"
+                                }</CardTitle>
+                        </CardBody>
+                    </Card>
+                ) : (
+                        <Card>
+                            {buttonPressed ? (
+                                <CardBody>
+                                    <CardTitle>Thank you! Your opinion has been recorded.</CardTitle>
+                                </CardBody>
+                            ) : (
+                                <Form onSubmit={handleRatingSubmit}>
+                                    <Label>Rate the exhibit</Label>
+                                    <FormGroup>
+                                        {ratings.map((r) => (
+                                            <FormGroup check key={r.id}>
+                                                <Label check>
+                                                    <Input
+                                                        type="radio"
+                                                        name="rating"
+                                                        value={r.id}
+                                                        checked={selectedRating === r.id}
+                                                        onChange={handleRatingChange}
+                                                    />
+                                                    {r.ratingName}
+                                                </Label>
+                                            </FormGroup>
+                                        ))}
+                                    </FormGroup>
+                                    <Button type="submit" color="primary" disabled={!selectedRating}>Submit Rating</Button>
+                                </Form>
+                            )}
+                        </Card>
+                    )}
+                </footer>
         </>
     );
 };
-
-
-//Edit and Delete button will show up beneath the item if logged in user owns the exhibit
-
-//edit button redirects to a form, while delete will rerender the page after asking if theyre sure they want to delete
-
-//Click on the item to bring up more details such as the original owner and placcard
 
 //Bottom of the page allows user to rate the exhibit, if the user has already rated it they will have a thank you for rating message
 

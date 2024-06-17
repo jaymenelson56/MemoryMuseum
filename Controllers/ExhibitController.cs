@@ -45,9 +45,8 @@ public class ExhibitController : ControllerBase
             List<ExhibitDTO> exhibits = _dbContext.Exhibits
                 .Include(e => e.UserProfile)
                 .ThenInclude(up => up.IdentityUser)
-                .Include(e => e.Ratings)
+                .Include(e => e.ExhibitRatings)
                     .ThenInclude(er => er.Rating)
-                .Include(e => e.Ratings)
                 .Select(e => new ExhibitDTO
                 {
                     Id = e.Id,
@@ -64,7 +63,7 @@ public class ExhibitController : ControllerBase
                         UserName = e.UserProfile.IdentityUser.UserName,
                         IdentityUserId = e.UserProfile.IdentityUserId
                     },
-                    Ratings = e.Ratings.Select(er => new ExhibitRatingDTO
+                    ExhibitRatings = e.ExhibitRatings.Select(er => new ExhibitRatingDTO
                     {
                         ExhibitId = er.ExhibitId,
                         RatingId = er.RatingId,
@@ -89,9 +88,9 @@ public class ExhibitController : ControllerBase
         ExhibitDTO? exhibit = _dbContext.Exhibits
             .Include(e => e.UserProfile)
                 .ThenInclude(up => up.IdentityUser)
-            .Include(e => e.Ratings)
-            .Include(e => e.Ratings)
-            .Include(e => e.Items) // Include the Items
+            .Include(e => e.ExhibitRatings)
+                .ThenInclude(er => er.Rating)
+            .Include(e => e.Items)
             .Where(e => e.Id == id)
             .Select(e => new ExhibitDTO
             {
@@ -109,11 +108,17 @@ public class ExhibitController : ControllerBase
                     UserName = e.UserProfile.IdentityUser.UserName,
                     IdentityUserId = e.UserProfile.IdentityUserId
                 },
-                Ratings = e.Ratings.Select(er => new ExhibitRatingDTO
+                ExhibitRatings = e.ExhibitRatings.Select(er => new ExhibitRatingDTO
                 {
                     ExhibitId = er.ExhibitId,
                     RatingId = er.RatingId,
                     UserProfileId = er.UserProfileId,
+                    Rating = new RatingDTO
+                    {
+                        Id = er.Rating.Id,
+                        RatingName = er.Rating.RatingName,
+                        Value = er.Rating.Value
+                    }
                 }).ToList(),
                 Items = e.Items.Select(i => new ItemDTO
                 {
@@ -137,7 +142,7 @@ public class ExhibitController : ControllerBase
         return Ok(exhibit);
     }
 
-[HttpPost]
+    [HttpPost]
     //[Authorize]
     public IActionResult CreateExhibit([FromBody] ExhibitDTO exhibitDTO)
     {
@@ -146,7 +151,7 @@ public class ExhibitController : ControllerBase
             return BadRequest("Exhibit data is null");
         }
 
-        
+
         Exhibit newExhibit = new Exhibit
         {
             Name = exhibitDTO.Name,
@@ -154,21 +159,21 @@ public class ExhibitController : ControllerBase
 
         };
 
-       
+
         _dbContext.Exhibits.Add(newExhibit);
         _dbContext.SaveChanges();
 
-        
+
         return CreatedAtAction(nameof(GetExhibitById), new { id = newExhibit.Id }, newExhibit);
     }
 
-     [HttpDelete("{id}")]
+    [HttpDelete("{id}")]
     //[Authorize]
     public IActionResult DeleteExhibit(int id)
     {
         Exhibit exhibit = _dbContext.Exhibits
             .Include(e => e.Items)
-            .Include(e => e.Ratings)
+            .Include(e => e.ExhibitRatings)
             .FirstOrDefault(e => e.Id == id);
 
         if (exhibit == null)
@@ -178,12 +183,44 @@ public class ExhibitController : ControllerBase
 
         // Remove the items and ratings associated with the exhibit
         _dbContext.Items.RemoveRange(exhibit.Items);
-        _dbContext.ExhibitRatings.RemoveRange(exhibit.Ratings);
+        _dbContext.ExhibitRatings.RemoveRange(exhibit.ExhibitRatings);
 
         // Remove the exhibit itself
         _dbContext.Exhibits.Remove(exhibit);
         _dbContext.SaveChanges();
 
         return NoContent();
+    }
+
+    [HttpPost("rating")]
+    //[Authorize]
+    public IActionResult CreateExhibitRating([FromBody] ExhibitRating exhibitRating)
+    {
+        if (exhibitRating == null)
+        {
+            return BadRequest("Rating data is null");
+        }
+
+        ExhibitRating newExhibitRating = new ExhibitRating
+        {
+            ExhibitId = exhibitRating.ExhibitId,
+            RatingId = exhibitRating.RatingId,
+            UserProfileId = exhibitRating.UserProfileId
+        };
+
+        ExhibitRating foundExhibitRating = _dbContext.ExhibitRatings.SingleOrDefault((er) => er.UserProfileId == exhibitRating.UserProfileId);
+        if (foundExhibitRating == null)
+        {
+            _dbContext.ExhibitRatings.Add(newExhibitRating);
+            _dbContext.SaveChanges();
+        }
+        else
+        {
+            _dbContext.ExhibitRatings.Remove(foundExhibitRating);
+            _dbContext.ExhibitRatings.Add(newExhibitRating);
+            _dbContext.SaveChanges();
+        }
+
+        return CreatedAtAction(nameof(GetExhibitById), new { id = newExhibitRating.ExhibitId }, newExhibitRating);
     }
 }

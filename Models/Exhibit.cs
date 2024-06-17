@@ -16,5 +16,5 @@ public class Exhibit
     [ForeignKey(nameof(UserProfileId))]
     public UserProfile? UserProfile { get; set; }
     public List<Item>? Items { get; set; }
-    public List<ExhibitRating>? Ratings { get; set; }
+    public List<ExhibitRating>? ExhibitRatings { get; set; }
 }

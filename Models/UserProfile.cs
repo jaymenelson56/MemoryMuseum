@@ -32,7 +32,7 @@ namespace MemoryMuseum.Models
 
         public IdentityUser IdentityUser { get; set; }
         public List<Exhibit>? Exhibits { get; set; }
-        public List<ExhibitRating>? Ratings { get; set; }
+        public List<ExhibitRating>? ExhibitRatings { get; set; }
         public string FullName
         {
             get
