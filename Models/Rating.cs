@@ -12,5 +12,5 @@ public class Rating
     [Required]
     [Range(1, 5, ErrorMessage = "The value must be between 1 and 5.")]
     public int Value { get; set; }
-    public List<ExhibitRating>? Ratings { get; set; }
+    public List<ExhibitRating>? ExhibitRatings { get; set; }
 }

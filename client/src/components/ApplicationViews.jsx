@@ -9,6 +9,8 @@ import { CreateExhibit } from "./Exhibit/CreateExhibit";
 import { CreateItem } from "./Items/CreateItem";
 import { ItemDetails } from "./Items/ItemDetails";
 import { EditItem } from "./Items/EditItem";
+import AuthorizedItemRoute from "./auth/AuthorizedItemRoute";
+import Unauthorized from "./auth/Unauthorized";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -77,12 +79,13 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
         <Route
           path="edit/:id"
           element={
-            <AuthorizedRoute loggedInUser={loggedInUser}>
+            <AuthorizedItemRoute loggedInUser={loggedInUser}>
               <EditItem loggedInUser={loggedInUser} />
-            </AuthorizedRoute>
+            </AuthorizedItemRoute>
           }
         />
-        </Route>
+      </Route>
+      <Route path="/unauthorized" element={<Unauthorized />} />
       <Route path="*" element={<p>Whoops, nothing here...</p>} />
     </Routes>
   );

@@ -33,3 +33,15 @@ export const deleteExhibit = async (id) => {
         throw new Error("Failed to delete exhibit");
     }
 }
+
+export const NewRating = async (rating) => {
+    const response = await fetch(_apiUrl + "/rating", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(rating),
+    });
+    const data = await response.json();
+    return data
+  };

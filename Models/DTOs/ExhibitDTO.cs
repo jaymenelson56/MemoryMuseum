@@ -7,13 +7,14 @@ public class ExhibitDTO
     public int UserProfileId { get; set; }
     public UserProfileDTO? UserProfile { get; set; }
     public List<ItemDTO>? Items { get; set; }
-    public List<ExhibitRatingDTO>? Ratings { get; set; }
+    public List<ExhibitRatingDTO>? ExhibitRatings { get; set; }
 
     public double AverageRating
     {
         get
         {
-            return Ratings?.Count > 0 ? Ratings.Average(r => r.Rating.Value) : 0;
+            return ExhibitRatings?.Count > 0 ? ExhibitRatings.Average(r => r.Rating.Value) : 0;
         }
     }
 }
+
