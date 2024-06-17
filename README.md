@@ -14,7 +14,11 @@ In the future, A.I. will run everything, and the things we enjoy will be a dista
 
 ## How to install
 To install follow the steps below
+1. Make sure bot VSCode and pgAdmin4 are installed on your machine.
 1. To pull this on your machine, open your terminal, and use the command "git clone git@github.com:jaymenelson56/MemoryMuseum.git"
+1. Run "dotnet user-secrets init"
+1. Run "dotnet user-secrets set MusuemMemoryDbConnectionString "Host=localhost;Port=5432;Username=postgres;Password=<your password>;Database=MuseumMemory", instead of "<your password> enter your postgres password
+1. Run "dotnet user-secrets set AdminPassword password" to set the first two accounts' password as "password", feel free to change it to whatever you please
 1. Run "dotnet ef migrations add InitialCreate" in your terminal.
 1. Run  "dotnet ef database update" in your terminal.
 1. Run "code ." inside the MemoryMuseum directory
