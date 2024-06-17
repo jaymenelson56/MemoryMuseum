@@ -1,6 +1,6 @@
 ## Memory Museum
 
-Time passes by pretty quickly. Sometimes it's nice to go back and see what things were like back then. Thanks to this app, you can create your own time capsule/memory page for everyone to view and populate the exhibit with items for everyone to see. If you have an item that you think would go better in another users exhibit you can also give them that item for their exhibit. Neat! As a registered user you can...
+In the future, A.I. will run everything, and the things we enjoy will be a distant memory. With this Memory Museum application we can turn our collections of everything we enjoy about this century, and perfectly preserve it online with a description of what it meant to us, to give the future a peek into the window of our lives back then. This museum will house exhibits that will demonstrate what objects of our time mean to us.  As a registered user you can...
 
 * View the various exhibits
 * View the various items within the exhibit
@@ -10,7 +10,7 @@ Time passes by pretty quickly. Sometimes it's nice to go back and see what thing
 * Edit their own items
 * Delete their own Items
 * Rate other users Exhibits
-* View the average rating of my exhibit
+* View the average rating of your exhibit
 
 ## How to install
 To install follow the steps below
@@ -23,4 +23,3 @@ To install follow the steps below
 1. In your terminal cd into the client folder.
 1. Run npm run dev in your terminal.
 1. Once in, follow the prompts, register, and enjoy the site.
-1. To login as an Admin use the log in "admina@strator.comx" as the email, and "password" as the password.
