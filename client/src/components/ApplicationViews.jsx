@@ -11,6 +11,8 @@ import { ItemDetails } from "./Items/ItemDetails";
 import { EditItem } from "./Items/EditItem";
 import AuthorizedItemRoute from "./auth/AuthorizedItemRoute";
 import Unauthorized from "./auth/Unauthorized";
+import { StorageRoom } from "./Items/StorageRoom";
+import { UserProfileList } from "./UserProfiles/UserProfileList";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -85,6 +87,22 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           }
         />
       </Route>
+      <Route
+          path="storage-room"
+          element={
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              <StorageRoom loggedInUser={loggedInUser} />
+            </AuthorizedRoute>
+          }
+        />
+        <Route
+          path="userlist"
+          element={
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              <UserProfileList  />
+            </AuthorizedRoute>
+          }
+        />
       <Route path="/unauthorized" element={<Unauthorized />} />
       <Route path="*" element={<p>Whoops, nothing here...</p>} />
     </Routes>

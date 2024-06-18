@@ -64,7 +64,7 @@ export const ExhibitHall = ({ loggedInUser }) => {
                         <CardBody>
                             <CardImg src={item.image} alt={item.name} />
                             <CardTitle>{item.name}</CardTitle>
-                            <CardText>{item.placard}</CardText>
+                            <Card>{item.placard}</Card>
                             <CardFooter><Link to={`/item/details/${item.id}`}>
                                 More Info
                             </Link></CardFooter>
