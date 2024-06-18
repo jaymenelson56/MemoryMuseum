@@ -53,6 +53,7 @@ public class ItemController : ControllerBase
     {
         ItemDTO? item = _dbContext.Items
             .Include(i => i.UserProfile)
+                .ThenInclude(up => up.IdentityUser)
             .Include(i => i.Exhibit)
             .Where(i => i.Id == id)
             .Select(i => new ItemDTO
@@ -128,6 +129,122 @@ public class ItemController : ControllerBase
         }
 
         _dbContext.Items.Remove(existingItem);
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
+
+    [HttpGet("needing-approval/{id}")]
+    public IActionResult GetItemsNeedingApproval(int id)
+    {
+        List<ItemDTO> items = _dbContext.Items
+            .Include(i => i.Exhibit)
+            .Include(i => i.UserProfile)
+            .Where(i => i.NeedsApproval == true && i.Exhibit.UserProfileId == id)
+            .Select(i => new ItemDTO
+            {
+                Id = i.Id,
+                Image = i.Image,
+                Name = i.Name,
+                UserProfileId = i.UserProfileId,
+                ExhibitId = i.ExhibitId,
+                Placard = i.Placard,
+                DatePublished = i.DatePublished,
+                NeedsApproval = i.NeedsApproval,
+                Approved = i.Approved,
+                Exhibit = new ExhibitDTO
+                {
+                    Id = i.Exhibit.Id,
+                    Name = i.Exhibit.Name,
+                    UserProfileId = i.Exhibit.UserProfileId
+                },
+                UserProfile = new UserProfileDTO
+                {
+                    Id = i.UserProfile.Id,
+                    FirstName = i.UserProfile.FirstName,
+                    LastName = i.UserProfile.LastName,
+                    Address = i.UserProfile.Address,
+                    Email = i.UserProfile.IdentityUser.Email,
+                    CreateDateTime = i.UserProfile.CreateDateTime,
+                    UserName = i.UserProfile.IdentityUser.UserName,
+                    IdentityUserId = i.UserProfile.IdentityUserId
+                }
+            }).ToList();
+
+        return Ok(items);
+    }
+
+    [HttpGet("not-approved/{id}")]
+    public IActionResult GetNotApprovedItems(int id)
+    {
+        List<ItemDTO> items = _dbContext.Items
+            .Include(i => i.Exhibit)
+                .ThenInclude(e => e.UserProfile)
+                    .ThenInclude(up => up.IdentityUser)
+            .Where(i => i.NeedsApproval == false && i.Approved == false && i.UserProfileId == id)
+            .Select(i => new ItemDTO
+            {
+                Id = i.Id,
+                Image = i.Image,
+                Name = i.Name,
+                UserProfileId = i.UserProfileId,
+                ExhibitId = i.ExhibitId,
+                Placard = i.Placard,
+                DatePublished = i.DatePublished,
+                NeedsApproval = i.NeedsApproval,
+                Approved = i.Approved,
+                Exhibit = new ExhibitDTO
+                {
+                    Id = i.Exhibit.Id,
+                    Name = i.Exhibit.Name,
+                    UserProfileId = i.Exhibit.UserProfileId,
+                    UserProfile = new UserProfileDTO
+                    {
+                        Id = i.Exhibit.UserProfile.Id,
+                        FirstName = i.Exhibit.UserProfile.FirstName,
+                        LastName = i.Exhibit.UserProfile.LastName,
+                        Address = i.Exhibit.UserProfile.Address,
+                        Email = i.Exhibit.UserProfile.IdentityUser.Email,
+                        CreateDateTime = i.Exhibit.UserProfile.CreateDateTime,
+                        UserName = i.Exhibit.UserProfile.IdentityUser.UserName,
+                        IdentityUserId = i.Exhibit.UserProfile.IdentityUserId
+                    }
+                },
+            }).ToList();
+
+        return Ok(items);
+    }
+
+    [HttpPut("approve/{id}")]
+    public IActionResult ApproveItem(int id)
+    {
+        Item existingItem = _dbContext.Items.Find(id);
+        if (existingItem == null)
+        {
+            return NotFound();
+        }
+
+        existingItem.Approved = true;
+        existingItem.NeedsApproval = false;
+
+        _dbContext.Entry(existingItem).State = EntityState.Modified;
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
+
+    [HttpPut("reject/{id}")]
+    public IActionResult RejectItem(int id)
+    {
+        Item existingItem = _dbContext.Items.Find(id);
+        if (existingItem == null)
+        {
+            return NotFound();
+        }
+
+        existingItem.NeedsApproval = false;
+
+        _dbContext.Entry(existingItem).State = EntityState.Modified;
         _dbContext.SaveChanges();
 
         return NoContent();

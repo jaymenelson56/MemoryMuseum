@@ -48,7 +48,7 @@ export const ItemDetails = ({ loggedInUser }) => {
                     <CardTitle><b>In museum since: </b>{new Date(item.datePublished).toLocaleDateString()}</CardTitle>
                     <CardTitle><b>Original Owner: </b>{item.userProfile?.userName}</CardTitle>
                     <CardTitle><b>Location: </b>{item.exhibit?.name}</CardTitle>
-                    <CardText>{item.placard}</CardText>
+                    <Card>{item.placard}</Card>
                     <CardFooter><Link to={`/exhibits/${item.exhibit?.id}`}>
                         Back to Exhibit
                     </Link></CardFooter>
