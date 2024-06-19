@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Button, Card, CardBody, CardFooter, CardGroup, CardImg, CardLink, CardText, CardTitle, Form, FormGroup, Input, Label } from "reactstrap";
+import { Button, Card, CardBody, CardColumns, CardFooter, CardGroup, CardImg, CardLink, CardText, CardTitle, Form, FormGroup, Input, Label } from "reactstrap";
 import { NewRating, deleteExhibit, getExhibit } from "../../managers/exhibitManager";
 import { getRatings } from "../../managers/ratingManager";
 import "./Exhibit.css";
@@ -54,32 +54,34 @@ export const ExhibitHall = ({ loggedInUser }) => {
     return (
         <>
             <Card className="transparent-card">
-            <h2>Welcome to {exhibit.name}</h2>
-            
-            {loggedInUser.id === exhibit.userProfileId && (
-                <div className="right-align">
-                    <Button color="danger" onClick={() => handleDelete(exhibit.id)}>Delete Exhibit</Button>
-                </div>
-            )}
+                <h2>Welcome to {exhibit.name}</h2>
+
+                {loggedInUser.id === exhibit.userProfileId && (
+                    <div className="right-align">
+                        <Button color="danger" onClick={() => handleDelete(exhibit.id)}>Delete Exhibit</Button>
+                    </div>
+                )}
             </Card>
-            <CardGroup>
+            <CardColumns>
                 {exhibit.items.map((item) => (
                     <Card key={item.id} className="transparent-card">
-                        <CardBody>
+                        <CardBody className="card-content">
                             <CardImg src={item.image} alt={item.name} style={{
                                 width: '18rem'
                             }} />
                             <CardTitle>{item.name}</CardTitle>
                             <Card body
-                                className="text-start my-2">{item.placard}</Card>
+                                className="text-start my-2" style={{
+                                    width: '18rem'
+                                }}>{item.placard}</Card>
                             <CardFooter><Link to={`/item/details/${item.id}`}>
                                 More Info
                             </Link></CardFooter>
                         </CardBody>
                     </Card>
                 ))}
-            </CardGroup>
-            
+            </CardColumns>
+
             <footer>
                 {loggedInUser.id === exhibit.userProfileId ? (
                     <Card className="transparent-card">
@@ -90,7 +92,7 @@ export const ExhibitHall = ({ loggedInUser }) => {
                             }</CardTitle>
                         </CardBody>
                     </Card>
-                    
+
                 ) : (
 
                     <Card body
@@ -130,7 +132,7 @@ export const ExhibitHall = ({ loggedInUser }) => {
                     </Card>
                 )}
             </footer>
-            
+
         </>
     );
 };

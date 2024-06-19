@@ -88,21 +88,21 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
         />
       </Route>
       <Route
-          path="storage-room"
-          element={
-            <AuthorizedRoute loggedInUser={loggedInUser}>
-              <StorageRoom loggedInUser={loggedInUser} />
-            </AuthorizedRoute>
-          }
-        />
-        <Route
-          path="userlist"
-          element={
-            <AuthorizedRoute loggedInUser={loggedInUser}>
-              <UserProfileList  />
-            </AuthorizedRoute>
-          }
-        />
+        path="storage-room"
+        element={
+          <AuthorizedRoute loggedInUser={loggedInUser}>
+            <StorageRoom loggedInUser={loggedInUser} />
+          </AuthorizedRoute>
+        }
+      />
+      <Route
+        path="userlist"
+        element={
+          <AuthorizedRoute loggedInUser={loggedInUser}>
+            <UserProfileList />
+          </AuthorizedRoute>
+        }
+      />
       <Route path="/unauthorized" element={<Unauthorized />} />
       <Route path="*" element={<p>Whoops, nothing here...</p>} />
     </Routes>

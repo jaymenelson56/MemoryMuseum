@@ -4,7 +4,7 @@ import { getItem, updateItem } from "../../managers/itemManager";
 import { Button, Card, Form, FormGroup, Input, Label } from "reactstrap";
 
 //Header
-export const EditItem = ({loggedInUser}) => {
+export const EditItem = ({ loggedInUser }) => {
     const [image, setImage] = useState("");
     const [name, setName] = useState("");
     const [placard, setPlacard] = useState("");
@@ -39,46 +39,43 @@ export const EditItem = ({loggedInUser}) => {
     return (
         <>
             <Card className="transparent-card">
-            <h2>Edit Item</h2>
-            <Form onSubmit={handleSubmit}>
-                <FormGroup>
-                <Label htmlFor="image">Image URL</Label>
-                <Input
-                    type="text"
-                    id="image"
-                    value={image}
-                    onChange={(e) => setImage(e.target.value)}
-                    required
-                />
-                </FormGroup>
-                <FormGroup>
-                <Label htmlFor="name">Name</Label>
-                <Input
-                    type="text"
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                />
-                </FormGroup>
-                <FormGroup>
-                <Label htmlFor="placard">Placard</Label>
-                <Input
-                    type="textarea"
-                    id="placard"
-                    value={placard}
-                    onChange={(e) => setPlacard(e.target.value)}
-                    required
-                />
-                </FormGroup>
-                <Button type="button" onClick={handleBack}>Back</Button>
-                <Button type="submit" className="btn btn-primary">Submit</Button>
-                
-            </Form>
+                <h2>Edit Item</h2>
+                <Form onSubmit={handleSubmit}>
+                    <FormGroup>
+                        <Label htmlFor="image">Image URL</Label>
+                        <Input
+                            type="text"
+                            id="image"
+                            value={image}
+                            onChange={(e) => setImage(e.target.value)}
+                            required
+                        />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label htmlFor="name">Name</Label>
+                        <Input
+                            type="text"
+                            id="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required
+                        />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label htmlFor="placard">Placard</Label>
+                        <Input
+                            type="textarea"
+                            id="placard"
+                            value={placard}
+                            onChange={(e) => setPlacard(e.target.value)}
+                            required
+                        />
+                    </FormGroup>
+                    <Button type="button" onClick={handleBack}>Back</Button>
+                    <Button type="submit" className="btn btn-primary">Submit</Button>
+
+                </Form>
             </Card>
         </>
     );
 }
-//Form allows edit to be made to name, image, and placcard
-
-//Submit and Cancel button

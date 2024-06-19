@@ -44,14 +44,16 @@ export const ItemDetails = ({ loggedInUser }) => {
                     </div>
                 )}
 
-                <CardBody>
+                <CardBody className="card-content">
                     <CardImg src={item.image} alt={item.name} style={{
                         width: '30rem'
                     }} />
                     <CardTitle><b>In museum since: </b>{new Date(item.datePublished).toLocaleDateString()}</CardTitle>
                     <CardTitle><b>Original Owner: </b>{item.userProfile?.userName}</CardTitle>
                     <CardTitle><b>Location: </b>{item.exhibit?.name}</CardTitle>
-                    <Card>{item.placard}</Card>
+                    <Card className="placard-text" style={{
+                        width: '30rem'
+                    }}>{item.placard}</Card>
                     <CardFooter><Link to={`/exhibits/${item.exhibit?.id}`}>
                         Back to Exhibit
                     </Link></CardFooter>

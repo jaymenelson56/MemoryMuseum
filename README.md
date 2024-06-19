@@ -5,6 +5,7 @@ In the future, A.I. will run everything, and the things we enjoy will be a dista
 * View the various exhibits
 * View the various items within the exhibit
 * Create their own exhibit
+* Approve/Reject items submitted to their exhibit
 * Delete their own exhibits
 * Upload their own items
 * Edit their own items

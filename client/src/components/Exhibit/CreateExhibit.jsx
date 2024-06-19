@@ -47,4 +47,3 @@ export const CreateExhibit = ({ loggedInUser }) => {
 }
 
 
-//There will be a submit and a cancel button
