@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardBody, CardFooter, CardGroup, CardImg, CardLink, CardText, CardTitle, Form, FormGroup, Input, Label } from "reactstrap";
 import { NewRating, deleteExhibit, getExhibit } from "../../managers/exhibitManager";
 import { getRatings } from "../../managers/ratingManager";
+import "./Exhibit.css";
 
 
 export const ExhibitHall = ({ loggedInUser }) => {
@@ -52,19 +53,25 @@ export const ExhibitHall = ({ loggedInUser }) => {
 
     return (
         <>
+            <Card className="transparent-card">
             <h2>Welcome to {exhibit.name}</h2>
+            
             {loggedInUser.id === exhibit.userProfileId && (
-                <div>
+                <div className="right-align">
                     <Button color="danger" onClick={() => handleDelete(exhibit.id)}>Delete Exhibit</Button>
                 </div>
             )}
+            </Card>
             <CardGroup>
                 {exhibit.items.map((item) => (
-                    <Card key={item.id}>
+                    <Card key={item.id} className="transparent-card">
                         <CardBody>
-                            <CardImg src={item.image} alt={item.name} />
+                            <CardImg src={item.image} alt={item.name} style={{
+                                width: '18rem'
+                            }} />
                             <CardTitle>{item.name}</CardTitle>
-                            <Card>{item.placard}</Card>
+                            <Card body
+                                className="text-start my-2">{item.placard}</Card>
                             <CardFooter><Link to={`/item/details/${item.id}`}>
                                 More Info
                             </Link></CardFooter>
@@ -72,23 +79,32 @@ export const ExhibitHall = ({ loggedInUser }) => {
                     </Card>
                 ))}
             </CardGroup>
+            
             <footer>
                 {loggedInUser.id === exhibit.userProfileId ? (
-                    <Card>
+                    <Card className="transparent-card">
                         <CardBody>
                             <CardTitle>Your Exhibit's Average Rating: {exhibit.exhibitRatings.length > 0
-                                    ? `${exhibit.averageRating} out of 5`
-                                    : "No ratings"
-                                }</CardTitle>
+                                ? `${exhibit.averageRating} out of 5`
+                                : "No ratings"
+                            }</CardTitle>
                         </CardBody>
                     </Card>
+                    
                 ) : (
-                        <Card>
-                            {buttonPressed ? (
-                                <CardBody>
-                                    <CardTitle>Thank you! Your opinion has been recorded.</CardTitle>
-                                </CardBody>
-                            ) : (
+
+                    <Card body
+                        className="text-start my-2 transparent-card center-flex"
+
+                    >
+                        {buttonPressed ? (
+                            <CardBody>
+                                <CardTitle>Thank you! Your opinion has been recorded.</CardTitle>
+                            </CardBody>
+                        ) : (
+                            <Card style={{
+                                width: '18rem'
+                            }}>
                                 <Form onSubmit={handleRatingSubmit}>
                                     <Label>Rate the exhibit</Label>
                                     <FormGroup>
@@ -109,14 +125,12 @@ export const ExhibitHall = ({ loggedInUser }) => {
                                     </FormGroup>
                                     <Button type="submit" color="primary" disabled={!selectedRating}>Submit Rating</Button>
                                 </Form>
-                            )}
-                        </Card>
-                    )}
-                </footer>
+                            </Card>
+                        )}
+                    </Card>
+                )}
+            </footer>
+            
         </>
     );
 };
-
-//Bottom of the page allows user to rate the exhibit, if the user has already rated it they will have a thank you for rating message
-
-//{new Date(item.datePublished).toLocaleDateString()}

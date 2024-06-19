@@ -25,13 +25,13 @@ function App() {
   }
 
   return (
-    <>
+    <div className="App">
       <NavBar loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
       <ApplicationViews
         loggedInUser={loggedInUser}
         setLoggedInUser={setLoggedInUser}
       />
-    </>
+    </div>
   );
 }
 
