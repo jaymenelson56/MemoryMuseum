@@ -11,9 +11,11 @@
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
@@ -22,6 +24,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -42,15 +45,18 @@
 }
 
 body {
-  background-image: url('/images/seasidemuseum.jpg');
+  background-image: url('/images/bestfloor.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  background-attachment: fixed;
   min-height: 100vh;
-  margin: 0; /* Ensure no default margin */
-  font-family: Arial, sans-serif; /* Optional: Set a default font */
+  margin: 0;
+
+  font-family: Arial, sans-serif;
 }
 
 .App {
-  min-height: 100vh; /* Ensure the div covers the viewport height */
+  min-height: 100vh;
+
 }

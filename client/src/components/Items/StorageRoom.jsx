@@ -40,7 +40,9 @@ export const StorageRoom = ({ loggedInUser }) => {
                         <Card key={item.id}>
                             <CardBody>
                                 <CardHeader>Item: {item.name}</CardHeader>
-                                <CardImg src={item.image} alt={item.name} />
+                                <CardImg src={item.image} alt={item.name} style={{
+                                    width: '18rem'
+                                }} />
                                 <CardTitle>For Exhibit: {item.exhibit.name}</CardTitle>
                                 <CardTitle>Original Owner: {item.userProfile.userName}</CardTitle>
                                 <CardText>Description: {item.placard}</CardText>
@@ -63,7 +65,9 @@ export const StorageRoom = ({ loggedInUser }) => {
                         <Card key={item.id}>
                             <CardBody>
                                 <CardHeader>Item: {item.name}</CardHeader>
-                                <CardImg src={item.image} alt={item.name} />
+                                <CardImg src={item.image} alt={item.name} style={{
+                                    width: '18rem'
+                                }} />
                                 <CardTitle>For Exhibit: {item.exhibit.name}</CardTitle>
                                 <CardTitle>Rejected By: {item.exhibit.userProfile.userName}</CardTitle>
                                 <CardText>Description: {item.placard}</CardText>
