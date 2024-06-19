@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom";
 import { getItem, updateItem } from "../../managers/itemManager";
-import { Button, Form, FormGroup, Input, Label } from "reactstrap";
+import { Button, Card, Form, FormGroup, Input, Label } from "reactstrap";
 
 //Header
 export const EditItem = ({loggedInUser}) => {
@@ -38,6 +38,7 @@ export const EditItem = ({loggedInUser}) => {
 
     return (
         <>
+            <Card className="transparent-card">
             <h2>Edit Item</h2>
             <Form onSubmit={handleSubmit}>
                 <FormGroup>
@@ -74,6 +75,7 @@ export const EditItem = ({loggedInUser}) => {
                 <Button type="submit" className="btn btn-primary">Submit</Button>
                 
             </Form>
+            </Card>
         </>
     );
 }

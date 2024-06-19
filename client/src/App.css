@@ -40,3 +40,17 @@
 .read-the-docs {
   color: #888;
 }
+
+body {
+  background-image: url('/images/seasidemuseum.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  min-height: 100vh;
+  margin: 0; /* Ensure no default margin */
+  font-family: Arial, sans-serif; /* Optional: Set a default font */
+}
+
+.App {
+  min-height: 100vh; /* Ensure the div covers the viewport height */
+}

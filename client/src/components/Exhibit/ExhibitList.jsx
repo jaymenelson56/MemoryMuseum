@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import { getExhibitList } from "../../managers/exhibitManager";
-import { Button, Table } from "reactstrap";
+import { Button, Card, Table } from "reactstrap";
 
 export const ExhibitList = () => {
     const [exhibits, setExhibits] = useState([]);
@@ -25,6 +25,7 @@ export const ExhibitList = () => {
 
     return (
         <>
+            <Card className="transparent-card">
             <h2>Exhibit List</h2>
             <Button onClick={handleCreateButton}>Create Exhibit</Button>
             <Table>
@@ -49,5 +50,6 @@ export const ExhibitList = () => {
                     ))}
                 </tbody>
             </Table>
+            </Card>
         </>)
 }

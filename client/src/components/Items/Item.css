@@ -1,0 +1,9 @@
+.transparent-card {
+    background-color: rgba(255, 255, 255, 0.7); /* Adjust the color and transparency as needed */
+    padding: 1rem; /* Add some padding if necessary */
+  }
+  .center-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

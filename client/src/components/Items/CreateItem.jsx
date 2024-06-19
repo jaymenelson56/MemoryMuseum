@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { Button, Form, FormGroup, Input, Label } from "reactstrap";
+import { Button, Card, Form, FormGroup, Input, Label } from "reactstrap";
 import { newItem } from "../../managers/itemManager"
 import { getExhibits } from "../../managers/exhibitManager";
+import "./Item.css";
 
 export const CreateItem = ({ loggedInUser }) => {
     const [image, setImage] = useState("")
@@ -36,6 +37,7 @@ export const CreateItem = ({ loggedInUser }) => {
 
     return (
         <>
+            <Card className="transparent-card">
             <h2> Create an Item</h2>
             <Form onSubmit={handleSubmit}>
                 <FormGroup>
@@ -86,6 +88,7 @@ export const CreateItem = ({ loggedInUser }) => {
                 <Button type="submit">Submit</Button><p> </p>
                 <Button type="button" onClick={handleBack}>Back</Button>
             </Form>
+            </Card>
         </>
     )
 }

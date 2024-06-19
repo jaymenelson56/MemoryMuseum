@@ -35,16 +35,19 @@ export const ItemDetails = ({ loggedInUser }) => {
 
     return (
         <>
-            <h2>{item.name}</h2>
-            {loggedInUser.id === item.exhibit?.userProfileId && (
-            <div>
-                <Button onClick={handleEdit}>Edit Item</Button>
-                <Button color="danger" onClick={() => handleDelete(item.id)}>Delete Item</Button>
-            </div>
-            )}
-            <Card>
+            <Card className="transparent-card">
+                <h2>{item.name}</h2>
+                {loggedInUser.id === item.exhibit?.userProfileId && (
+                    <div className="right-align">
+                        <Button color="info" onClick={handleEdit} style={{ marginRight: '10px' }}>Edit Item</Button>
+                        <Button color="danger" onClick={() => handleDelete(item.id)}>Delete Item</Button>
+                    </div>
+                )}
+
                 <CardBody>
-                    <CardImg src={item.image} alt={item.name} />
+                    <CardImg src={item.image} alt={item.name} style={{
+                        width: '30rem'
+                    }} />
                     <CardTitle><b>In museum since: </b>{new Date(item.datePublished).toLocaleDateString()}</CardTitle>
                     <CardTitle><b>Original Owner: </b>{item.userProfile?.userName}</CardTitle>
                     <CardTitle><b>Location: </b>{item.exhibit?.name}</CardTitle>
@@ -58,6 +61,3 @@ export const ItemDetails = ({ loggedInUser }) => {
     )
 }
 
-//In a Card, Details include Image, Name, Placard, DatePublished, Exhibit Hall, and original owner.
-
-//A return button takes you back to exhibit
