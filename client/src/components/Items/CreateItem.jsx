@@ -23,6 +23,9 @@ export const CreateItem = ({ loggedInUser }) => {
             Placard: placard,
             UserProfileId: loggedInUser.id
         };
+        if (exhibitId == 0) {
+            window.alert("Please Select an exhibit")
+        }
         await newItem(itemForm)
         navigate(`/exhibits/${exhibitId}`);
     };
@@ -48,6 +51,7 @@ export const CreateItem = ({ loggedInUser }) => {
                             onChange={(e) => {
                                 setName(e.target.value);
                             }}
+                            required
                         />
                     </FormGroup>
                     <FormGroup>
@@ -68,6 +72,7 @@ export const CreateItem = ({ loggedInUser }) => {
                             onChange={(e) => {
                                 setPlacard(e.target.value);
                             }}
+                            required
                         />
                     </FormGroup>
                     <FormGroup>

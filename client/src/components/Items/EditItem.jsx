@@ -48,7 +48,6 @@ export const EditItem = ({ loggedInUser }) => {
                             id="image"
                             value={image}
                             onChange={(e) => setImage(e.target.value)}
-                            required
                         />
                     </FormGroup>
                     <FormGroup>

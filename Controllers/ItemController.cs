@@ -41,8 +41,18 @@ public class ItemController : ControllerBase
             Approved = false,
         };
 
-        _dbContext.Items.Add(newItem);
-        _dbContext.SaveChanges();
+        try
+        {
+            _dbContext.Items.Add(newItem);
+            _dbContext.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+            // Log the exception (optional)
+            // _logger.LogError(ex, "An error occurred while creating the item.");
+
+            return StatusCode(500, "An error occurred while creating the item.");
+        }
 
         return CreatedAtAction(nameof(GetItemById), new { id = newItem.Id }, newItem);
     }
