@@ -208,7 +208,7 @@ public class ExhibitController : ControllerBase
             UserProfileId = exhibitRating.UserProfileId
         };
 
-        ExhibitRating foundExhibitRating = _dbContext.ExhibitRatings.SingleOrDefault((er) => er.UserProfileId == exhibitRating.UserProfileId);
+        ExhibitRating foundExhibitRating = _dbContext.ExhibitRatings.SingleOrDefault((er) => er.UserProfileId == exhibitRating.UserProfileId && er.ExhibitId == exhibitRating.ExhibitId);
         if (foundExhibitRating == null)
         {
             _dbContext.ExhibitRatings.Add(newExhibitRating);
