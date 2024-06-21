@@ -17,14 +17,14 @@ export const UserProfileList = () => {
                 <Table>
                     <thead><tr>
                         <th>UserName</th>
-                        <th>User Type</th>
+                        <th>Email</th>
                     </tr>
                     </thead>
                     <tbody>
                         {users.map((u) => (
                             <tr key={u.id}>
                                 <th scope="row">{u.userName}</th>
-                                <td>Admin</td>
+                                <td>{u.email}</td>
                             </tr>
                         ))}
                     </tbody>

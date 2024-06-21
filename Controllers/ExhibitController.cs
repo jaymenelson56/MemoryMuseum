@@ -120,7 +120,10 @@ public class ExhibitController : ControllerBase
                         Value = er.Rating.Value
                     }
                 }).ToList(),
-                Items = e.Items.Where(i => i.Approved).Select(i => new ItemDTO
+                Items = e.Items
+                .Where(i => i.Approved)
+                .OrderBy(i => i.DatePublished)
+                .Select(i => new ItemDTO
                 {
                     Id = i.Id,
                     Image = i.Image,

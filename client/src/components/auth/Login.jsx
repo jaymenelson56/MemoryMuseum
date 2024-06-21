@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, FormFeedback, FormGroup, Input, Label } from "reactstrap";
+import { Button, Card, FormFeedback, FormGroup, Input, Label } from "reactstrap";
 import { login } from "../../managers/authManager";
 
 
@@ -24,6 +24,7 @@ export default function Login({ setLoggedInUser }) {
 
   return (
     <div className="container" style={{ maxWidth: "500px" }}>
+      <Card className="transparent-card">
       <h3>Login</h3>
       <FormGroup>
         <Label>Email</Label>
@@ -57,6 +58,7 @@ export default function Login({ setLoggedInUser }) {
       <p>
         Not signed up? Register <Link to="/register">here</Link>
       </p>
+      </Card>
     </div>
   );
 }

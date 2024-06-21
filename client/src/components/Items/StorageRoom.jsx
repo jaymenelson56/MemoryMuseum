@@ -30,10 +30,10 @@ export const StorageRoom = ({ loggedInUser }) => {
     return (
         <>
             <Card>
-                <h2>Items Pending Approval</h2>
+                <h2>Incoming Items</h2>
                 {pendingItems.length === 0 ? (
                     <CardBody>
-                        <CardText>No Items requiring approval at this time.</CardText>
+                        <CardText>No incoming items at this time.</CardText>
                     </CardBody>
                 ) : (
                     pendingItems.map((item) => (
@@ -55,10 +55,10 @@ export const StorageRoom = ({ loggedInUser }) => {
                 )}
             </Card>
             <Card>
-                <h2>Rejected Items</h2>
+                <h2>Outgoing Items</h2>
                 {rejectedItems.length === 0 ? (
                     <CardBody>
-                        <CardText>No rejected items at this time.</CardText>
+                        <CardText>No outgoing items at this time.</CardText>
                     </CardBody>
                 ) : (
                     rejectedItems.map((item) => (
@@ -69,7 +69,12 @@ export const StorageRoom = ({ loggedInUser }) => {
                                     width: '18rem'
                                 }} />
                                 <CardTitle>For Exhibit: {item.exhibit.name}</CardTitle>
-                                <CardTitle>Rejected By: {item.exhibit.userProfile.userName}</CardTitle>
+                                <CardText>
+                                    Status: {item.needsApproval
+                                        ? 'Pending'
+                                        : `Rejected by ${item.exhibit.userProfile.userName}`
+                                    }
+                                </CardText>
                                 <CardText>Description: {item.placard}</CardText>
                                 <CardFooter>
                                     <Button color="danger" onClick={() => handleDelete(item.id)}>Delete</Button>

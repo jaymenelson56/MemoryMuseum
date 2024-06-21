@@ -28,6 +28,12 @@ public class ItemController : ControllerBase
             return BadRequest("Item data is null");
         };
 
+        Exhibit exhibit = _dbContext.Exhibits.SingleOrDefault(e => e.Id == item.ExhibitId);
+        if (exhibit == null)
+        {
+            return NotFound("Exhibit not found");
+        }
+
         Item newItem = new Item
         {
 
@@ -37,8 +43,8 @@ public class ItemController : ControllerBase
             ExhibitId = item.ExhibitId,
             Placard = item.Placard,
             DatePublished = DateTime.Now,
-            NeedsApproval = true,
-            Approved = false,
+            NeedsApproval = exhibit.UserProfileId != item.UserProfileId,
+            Approved = exhibit.UserProfileId == item.UserProfileId
         };
 
         try
@@ -48,8 +54,7 @@ public class ItemController : ControllerBase
         }
         catch (Exception ex)
         {
-            // Log the exception (optional)
-            // _logger.LogError(ex, "An error occurred while creating the item.");
+
 
             return StatusCode(500, "An error occurred while creating the item.");
         }
@@ -191,7 +196,7 @@ public class ItemController : ControllerBase
             .Include(i => i.Exhibit)
                 .ThenInclude(e => e.UserProfile)
                     .ThenInclude(up => up.IdentityUser)
-            .Where(i => i.NeedsApproval == false && i.Approved == false && i.UserProfileId == id)
+            .Where(i => i.Approved == false && i.UserProfileId == id)
             .Select(i => new ItemDTO
             {
                 Id = i.Id,
