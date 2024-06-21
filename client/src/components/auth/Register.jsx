@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, FormFeedback, FormGroup, Input, Label } from "reactstrap";
+import { Button, Card, FormFeedback, FormGroup, Input, Label } from "reactstrap";
 import { register } from "../../managers/authManager";
 
 export default function Register({ setLoggedInUser }) {
@@ -44,6 +44,7 @@ export default function Register({ setLoggedInUser }) {
 
   return (
     <div className="container" style={{ maxWidth: "500px" }}>
+      <Card className="transparent-card">
       <h3>Sign Up</h3>
       <FormGroup>
         <Label>First Name</Label>
@@ -133,6 +134,7 @@ export default function Register({ setLoggedInUser }) {
       <p>
         Already signed up? Log in <Link to="/login">here</Link>
       </p>
+      </Card>
     </div>
   );
 }
