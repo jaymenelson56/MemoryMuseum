@@ -40,7 +40,7 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
                                     <NavLink tag={RRNavLink} to="/storage-room">Storage Room</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink tag={RRNavLink} to="/userlist">User List</NavLink>
+                                    <NavLink tag={RRNavLink} to="/userprofiles">User List</NavLink>
                                 </NavItem>
                             </Nav>
                         </Collapse>

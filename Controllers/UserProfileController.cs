@@ -37,4 +37,38 @@ public class UserProfileController : ControllerBase
         }));
     }
 
+    [HttpGet("{id}")]
+    // [Authorize]
+    public IActionResult GetById(int id)
+    {
+        UserProfile? userProfile = _dbContext.UserProfiles
+            .Include(up => up.IdentityUser)
+            .Include(up => up.Exhibits) // Include Exhibits
+            .Where(up => up.Id == id)
+            .Select(up => new UserProfile
+            {
+                Id = up.Id,
+                FirstName = up.FirstName,
+                LastName = up.LastName,
+                Address = up.Address,
+                CreateDateTime = up.CreateDateTime,
+                Email = up.IdentityUser.Email,
+                UserName = up.IdentityUser.UserName,
+                IdentityUserId = up.IdentityUserId,
+                Exhibits = up.Exhibits.Select(e => new Exhibit
+                {
+                    Id = e.Id,
+                    Name = e.Name,
+                    UserProfileId = e.UserProfileId,
+                }).ToList()
+            })
+            .FirstOrDefault();
+
+        if (userProfile == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(userProfile);
+    }
 }

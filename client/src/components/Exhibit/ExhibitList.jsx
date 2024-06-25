@@ -1,5 +1,3 @@
-
-
 import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import { getExhibitList } from "../../managers/exhibitManager";
@@ -39,10 +37,10 @@ export const ExhibitList = () => {
                         {exhibits.map((e) => (
                             <tr key={e.id}>
                                 <th scope="row"><Link to={`/exhibits/${e.id}`}>{e.name}</Link></th>
-                                <td>{e.userProfile.userName}</td>
+                                <td><Link to={`/userprofiles/${e.userProfileId}`}>{e.userProfile.userName}</Link></td>
                                 <td>
                                     {e.exhibitRatings.length > 0
-                                        ? `${e.averageRating} out of 5`
+                                        ? `${e.averageRating.toFixed(1)} out of 5`
                                         : "No ratings"
                                     }
                                 </td>
