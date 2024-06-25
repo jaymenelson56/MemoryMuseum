@@ -49,7 +49,7 @@ export const ItemDetails = ({ loggedInUser }) => {
                         width: '30rem'
                     }} />
                     <CardTitle><b>In museum since: </b>{new Date(item.datePublished).toLocaleDateString()}</CardTitle>
-                    <CardTitle><b>Original Owner: </b>{item.userProfile?.userName}</CardTitle>
+                    <CardTitle><b>Original Owner: </b><Link to={`/userprofiles/${item.userProfileId}`}>{item.userProfile?.userName}</Link></CardTitle> 
                     <CardTitle><b>Location: </b>{item.exhibit?.name}</CardTitle>
                     <Card className="placard-text" style={{
                         width: '30rem'

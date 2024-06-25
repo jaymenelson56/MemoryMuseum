@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, CardBody, CardFooter, CardText, CardTitle, CardImg, CardHeader, Button } from "reactstrap";
 import { approveItem, deleteItem, getPendingItems, getRejectedItems, rejectItem } from "../../managers/itemManager";
+import { Link } from "react-router-dom";
 
 export const StorageRoom = ({ loggedInUser }) => {
     const [pendingItems, setPendingItems] = useState([]);
@@ -44,7 +45,7 @@ export const StorageRoom = ({ loggedInUser }) => {
                                     width: '18rem'
                                 }} />
                                 <CardTitle>For Exhibit: {item.exhibit.name}</CardTitle>
-                                <CardTitle>Original Owner: {item.userProfile.userName}</CardTitle>
+                                <CardTitle>Original Owner: <Link to={`/userprofiles/${item.userProfileId}`}>{item.userProfile.userName}</Link></CardTitle>
                                 <CardText>Description: {item.placard}</CardText>
                                 <CardFooter>
                                     <Button color="success" onClick={() => handleApprove(item.id)}>Approve</Button>
@@ -72,7 +73,7 @@ export const StorageRoom = ({ loggedInUser }) => {
                                 <CardText>
                                     Status: {item.needsApproval
                                         ? 'Pending'
-                                        : `Rejected by ${item.exhibit.userProfile.userName}`
+                                        : <>Rejected by <Link to={`/userprofiles/${item.exhibit.userProfileId}`}>{item.exhibit.userProfile.userName}</Link></>
                                     }
                                 </CardText>
                                 <CardText>Description: {item.placard}</CardText>

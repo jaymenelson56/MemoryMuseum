@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Card, Table } from "reactstrap"
 import { getUsers } from "../../managers/userProfileManager";
+import { Link } from "react-router-dom";
 
 export const UserProfileList = () => {
     const [users, setUsers] = useState([]);
@@ -23,7 +24,7 @@ export const UserProfileList = () => {
                     <tbody>
                         {users.map((u) => (
                             <tr key={u.id}>
-                                <th scope="row">{u.userName}</th>
+                                <th scope="row"><Link to={`/userprofiles/${u.id}`}>{u.userName}</Link></th>
                                 <td>{u.email}</td>
                             </tr>
                         ))}

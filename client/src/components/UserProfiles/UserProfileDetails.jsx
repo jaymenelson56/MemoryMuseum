@@ -9,13 +9,12 @@ export const UserProfileDetails = () => {
     const { id } = useParams();
 
     useEffect(() => {
-        getUsersById(id).then(setUserProfile)
-    }, [id])
+        getUsersById(id).then(setUserProfile);
+    }, [id]);
 
     if (!userProfile) {
-        return null
+        return null;
     }
-
 
     return (
         <>
@@ -26,18 +25,23 @@ export const UserProfileDetails = () => {
                         <CardHeader>{userProfile.userName}</CardHeader>
                         <ListGroup flush>
                             <ListGroupItem>Name: <b>{userProfile?.fullName}</b></ListGroupItem>
-                            <ListGroupItem>Address: <b>{userProfile?.address}</b></ListGroupItem>
-                            <ListGroupItem>Member Since: <b>{new Date(userProfile?.createDateTime).toLocaleDateString()}</b></ListGroupItem>
-                            <ListGroupItem>Email: <b>{userProfile?.email}</b></ListGroupItem>
+                            <ListGroupItem>Address: <b>{userProfile.address}</b></ListGroupItem>
+                            <ListGroupItem>Member Since: <b>{new Date(userProfile.createDateTime).toLocaleDateString()}</b></ListGroupItem>
+                            <ListGroupItem>Email: <b>{userProfile.email}</b></ListGroupItem>
                         </ListGroup>
                     </CardBody>
                     <Card className="exhibits-card">
-                        <CardTitle><b>{userProfile.firstName}'s exhibits</b></CardTitle>
-                        {userProfile.exhibits.map((exhibit) => (
-                            <ul><li key={exhibit.id}>{exhibit.name}</li></ul>
-                        ))}</Card>
+                        <CardBody>
+                            <CardTitle><b>{userProfile.firstName}'s Exhibits</b></CardTitle>
+                            <ul>
+                                {userProfile.exhibits?.map((exhibit) => (
+                                    <li key={exhibit.id}>{exhibit.name}</li>
+                                ))}
+                            </ul>
+                        </CardBody>
+                    </Card>
                 </Card>
             </Card>
         </>
-    )
-}
+    );
+};
