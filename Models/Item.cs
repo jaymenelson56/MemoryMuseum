@@ -7,7 +7,7 @@ public class Item
 {
     public int Id { get; set; }
     [DataType(DataType.Url)]
-    [MaxLength(255)]
+    
     public string? Image { get; set; }
     [Required]
     public string Name { get; set; }

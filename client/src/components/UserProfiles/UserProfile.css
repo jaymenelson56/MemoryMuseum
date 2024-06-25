@@ -1,0 +1,14 @@
+.transparent-card {
+    padding: 20px;
+}
+
+.main-card {
+    margin-bottom: 20px;
+}
+
+.exhibits-card {
+    width: 80%; 
+    float: left; 
+    text-align: left;
+    margin-top: 20px;
+}
