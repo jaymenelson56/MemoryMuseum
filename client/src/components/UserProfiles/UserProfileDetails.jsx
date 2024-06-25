@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Card, CardBody, CardHeader, CardTitle, ListGroup, ListGroupItem, Table } from "reactstrap"
 import { getUsersById } from "../../managers/userProfileManager";
 import "./UserProfile.css";
@@ -35,7 +35,7 @@ export const UserProfileDetails = () => {
                             <CardTitle><b>{userProfile.firstName}'s Exhibits</b></CardTitle>
                             <ul>
                                 {userProfile.exhibits?.map((exhibit) => (
-                                    <li key={exhibit.id}>{exhibit.name}</li>
+                                    <li key={exhibit.id}><Link to={`/exhibits/${exhibit.id}`}>{exhibit.name}</Link></li>
                                 ))}
                             </ul>
                         </CardBody>

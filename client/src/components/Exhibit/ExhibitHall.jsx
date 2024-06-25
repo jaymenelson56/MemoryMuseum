@@ -87,7 +87,7 @@ export const ExhibitHall = ({ loggedInUser }) => {
                     <Card className="transparent-card">
                         <CardBody>
                             <CardTitle>Your Exhibit's Average Rating: {exhibit.exhibitRatings.length > 0
-                                ? `${exhibit.averageRating} out of 5`
+                                ? `${exhibit.averageRating.toFixed(1)} out of 5`
                                 : "No ratings"
                             }</CardTitle>
                         </CardBody>
