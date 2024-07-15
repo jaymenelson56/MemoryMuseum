@@ -6,7 +6,8 @@ import { getExhibits } from "../../managers/exhibitManager";
 import "./Item.css";
 
 export const CreateItem = ({ loggedInUser }) => {
-    const [image, setImage] = useState("")
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [imageUrl, setImageUrl] = useState("")
     const [name, setName] = useState("")
     const [exhibitId, setExhibitId] = useState("0")
     const [placard, setPlacard] = useState("")
@@ -14,20 +15,40 @@ export const CreateItem = ({ loggedInUser }) => {
 
     const navigate = useNavigate()
 
+    const fileSelectedHandler = (event) => {
+        setSelectedFile(event.target.files[0]);
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const itemForm = {
-            Image: image,
-            Name: name,
-            ExhibitId: exhibitId,
-            Placard: placard,
-            UserProfileId: loggedInUser.id
-        };
-        if (exhibitId == 0) {
-            window.alert("Please Select an exhibit")
+
+        if (!selectedFile && !imageUrl) {
+            alert("Please provide either an image file or an image URL.");
+            return;
         }
-        await newItem(itemForm)
-        navigate(`/exhibits/${exhibitId}`);
+
+        const itemData = new FormData();
+        if (selectedFile) {
+            itemData.append("image", selectedFile);
+        }
+        itemData.append("imageUrl", imageUrl || "");
+        itemData.append("name", name);
+        itemData.append("placard", placard);
+        itemData.append("exhibitId", exhibitId);
+        itemData.append("userProfileId", loggedInUser.id);
+
+        if (exhibitId == 0) {
+            window.alert("Please Select an exhibit");
+            return;
+        }
+
+        try {
+            const response = await newItem(itemData);
+            console.log('Response:', response);
+            navigate(`/exhibits/${exhibitId}`);
+        } catch (error) {
+            console.error("There was an error creating the item", error);
+        }
     };
 
     const handleBack = () => {
@@ -55,12 +76,19 @@ export const CreateItem = ({ loggedInUser }) => {
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label>Image Url</Label>
+                        <Label>Image</Label>
+                        <Input
+                            type="file"
+                            onChange={fileSelectedHandler}
+                        />
+                    </FormGroup>
+                    <FormGroup>
+                        <Label>Or Enter Image URL</Label>
                         <Input
                             type="text"
-                            value={image}
+                            value={imageUrl}
                             onChange={(e) => {
-                                setImage(e.target.value);
+                                setImageUrl(e.target.value);
                             }}
                         />
                     </FormGroup>
