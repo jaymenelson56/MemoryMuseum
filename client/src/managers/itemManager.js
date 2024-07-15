@@ -17,14 +17,10 @@ export const getItem = async (id) => {
 };
 
 export const updateItem = async (id, itemData) => {
-    const response = await fetch(_apiUrl + `/${id}`, {
+    return fetch(_apiUrl + `/${id}`, {
         method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(itemData),
-
-    });
+        body: itemData,
+    }).then((res) => res.json());
 }
 
 export const deleteItem = async (id) => {

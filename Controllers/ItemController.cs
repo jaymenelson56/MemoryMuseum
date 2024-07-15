@@ -110,27 +110,52 @@ public class ItemController : ControllerBase
     }
     [HttpPut("{id}")]
     //Authorize
-    public IActionResult UpdateItem(int id, [FromBody] ItemDTO itemDTO)
+    public async Task<IActionResult> UpdateItem(int id, 
+    [FromForm] string name, 
+    [FromForm] string placard, 
+    [FromForm] IFormFile image = null, 
+    [FromForm] string imageUrl = null)
     {
-        if (itemDTO == null || id != itemDTO.Id)
-        {
-            return BadRequest("Invalid item data");
-        }
 
-        Item existingItem = _dbContext.Items.Find(id);
+        Item existingItem = _dbContext.Items
+        .SingleOrDefault(i => i.Id == id);
         if (existingItem == null)
         {
             return NotFound();
         }
 
-        existingItem.Image = itemDTO.Image;
-        existingItem.Name = itemDTO.Name;
-        existingItem.Placard = itemDTO.Placard;
+        existingItem.Name = name;
+        existingItem.Placard = placard;
+
+        if (image != null && image.Length > 0)
+        {
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "client", "public", "uploads");
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            var filePath = Path.Combine(uploadsFolder, image.FileName);
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await image.CopyToAsync(stream);
+            }
+
+            existingItem.Image = $"/uploads/{image.FileName}";
+        }
+        else if (!string.IsNullOrEmpty(imageUrl))
+        {
+            existingItem.Image = imageUrl;
+        }
+        else
+        {
+            return BadRequest("Either image or imageURL must be provided.");
+        }
 
         _dbContext.Entry(existingItem).State = EntityState.Modified;
-        _dbContext.SaveChanges();
+        await _dbContext.SaveChangesAsync();
 
-        return NoContent();
+        return Ok(existingItem);
     }
 
     [HttpDelete("{id}")]
