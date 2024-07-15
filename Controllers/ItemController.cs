@@ -20,32 +20,60 @@ public class ItemController : ControllerBase
     }
 
     [HttpPost]
-    //Auhtorize
-    public IActionResult CreateItem([FromBody] Item item)
+    // Authorize
+    public async Task<IActionResult> CreateItem([FromForm] string name, 
+    [FromForm] int userProfileId, 
+    [FromForm] int exhibitId, 
+    [FromForm] string placard,
+    [FromForm] IFormFile image = null, 
+    [FromForm] string imageUrl = null)
     {
-        if (item == null)
+        if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(placard))
         {
-            return BadRequest("Item data is null");
-        };
+            return BadRequest("Name and placard are required.");
+        }
 
-        Exhibit exhibit = _dbContext.Exhibits.SingleOrDefault(e => e.Id == item.ExhibitId);
+        var exhibit = _dbContext.Exhibits.SingleOrDefault(e => e.Id == exhibitId);
         if (exhibit == null)
         {
             return NotFound("Exhibit not found");
         }
 
-        Item newItem = new Item
+        var newItem = new Item
         {
-
-            Image = item.Image,
-            Name = item.Name,
-            UserProfileId = item.UserProfileId,
-            ExhibitId = item.ExhibitId,
-            Placard = item.Placard,
+            Name = name,
+            UserProfileId = userProfileId,
+            ExhibitId = exhibitId,
+            Placard = placard,
             DatePublished = DateTime.Now,
-            NeedsApproval = exhibit.UserProfileId != item.UserProfileId,
-            Approved = exhibit.UserProfileId == item.UserProfileId
+            NeedsApproval = exhibit.UserProfileId != userProfileId,
+            Approved = exhibit.UserProfileId == userProfileId
         };
+
+        if (image != null && image.Length > 0)
+        {
+            var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "client", "public", "uploads");
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            var filePath = Path.Combine(uploadsFolder, image.FileName);
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await image.CopyToAsync(stream);
+            }
+
+            newItem.Image = $"/uploads/{image.FileName}";
+        }
+        else if (!string.IsNullOrEmpty(imageUrl))
+        {
+            newItem.Image = imageUrl;
+        }
+        else
+        {
+            return BadRequest("Either image or imageUrl must be provided.");
+        }
 
         try
         {
@@ -54,8 +82,6 @@ public class ItemController : ControllerBase
         }
         catch (Exception ex)
         {
-
-
             return StatusCode(500, "An error occurred while creating the item.");
         }
 
@@ -110,10 +136,10 @@ public class ItemController : ControllerBase
     }
     [HttpPut("{id}")]
     //Authorize
-    public async Task<IActionResult> UpdateItem(int id, 
-    [FromForm] string name, 
-    [FromForm] string placard, 
-    [FromForm] IFormFile image = null, 
+    public async Task<IActionResult> UpdateItem(int id,
+    [FromForm] string name,
+    [FromForm] string placard,
+    [FromForm] IFormFile image = null,
     [FromForm] string imageUrl = null)
     {
 

@@ -1,12 +1,9 @@
 const _apiUrl = "/api/Item";
 
-export const newItem = async (exhibit) => {
+export const newItem = async (itemData) => {
     const response = await fetch(_apiUrl, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(exhibit)
+        body: itemData
     });
     const data = await response.json();
     return data
