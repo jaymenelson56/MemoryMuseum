@@ -28,18 +28,14 @@ export const UserProfileDetails = () => {
                             <ListGroupItem>Address: <b>{userProfile.address}</b></ListGroupItem>
                             <ListGroupItem>Member Since: <b>{new Date(userProfile.createDateTime).toLocaleDateString()}</b></ListGroupItem>
                             <ListGroupItem>Email: <b>{userProfile.email}</b></ListGroupItem>
+                            <ListGroupItem><b>List of Exhibits</b>: 
+                                <div>
+                                {userProfile.exhibits?.map((exhibit) => (
+                                    <p key={exhibit.id}><Link to={`/exhibits/${exhibit.id}`}>{exhibit.name}</Link></p>
+                                ))}    
+                                </div></ListGroupItem>
                         </ListGroup>
                     </CardBody>
-                    <Card className="exhibits-card">
-                        <CardBody>
-                            <CardTitle><b>{userProfile.firstName}'s Exhibits</b></CardTitle>
-                            <ul>
-                                {userProfile.exhibits?.map((exhibit) => (
-                                    <li key={exhibit.id}><Link to={`/exhibits/${exhibit.id}`}>{exhibit.name}</Link></li>
-                                ))}
-                            </ul>
-                        </CardBody>
-                    </Card>
                 </Card>
             </Card>
         </>
