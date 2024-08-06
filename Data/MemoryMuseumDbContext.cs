@@ -103,7 +103,7 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
         new Item
         {
             Id = 1,
-            Image = "https://example.com/image1.jpg",
+            Image = "/images/gameandwatch.jpg",
             Name = "Game and Watch",
             UserProfileId = 1,
             ExhibitId = 1,
@@ -115,7 +115,7 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
         new Item
         {
             Id = 2,
-            Image = "https://example.com/image2.jpg",
+            Image = "/images/nintendods.jpg",
             Name = "Nintendo DS",
             UserProfileId = 1,
             ExhibitId = 1,
@@ -127,11 +127,11 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
         new Item
         {
             Id = 3,
-            Image = "https://example.com/image3.jpg",
-            Name = "Dog Toy",
+            Image = "/images/woodywoodpecker.jpg",
+            Name = "Woody Woodpecker toy",
             UserProfileId = 2,
             ExhibitId = 2,
-            Placard = "Had a lot of fun with this",
+            Placard = "This is my favorite toy in life. Woody the Woodpecker. Jayme actually bought me three of these this is the third one. He does his trade mark laugh drives me mad.",
             DatePublished = DateTime.Now,
             NeedsApproval = false,
             Approved = true
@@ -139,11 +139,11 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
         new Item
         {
             Id = 4,
-            Image = "https://example.com/image4.jpg",
-            Name = "Dog Toy 2",
+            Image = "/images/pyroraptortoy.jpg",
+            Name = "Pyro Raptor Toy",
             UserProfileId = 2,
             ExhibitId = 2,
-            Placard = "More fun.",
+            Placard = "From that Jurrassic movie I never saw. I really loved this toy. So I am putting it here on display for you all. Please do not squeak it.",
             DatePublished = DateTime.Now,
             NeedsApproval = false,
             Approved = true
