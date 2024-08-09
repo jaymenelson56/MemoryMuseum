@@ -7,8 +7,22 @@
 }
 
 .exhibits-card {
-    width: 80%; 
-    float: left; 
-    text-align: left;
+    width: 80%;
+    margin: 0 auto; /* Centers the card itself */
+    text-align: center; /* Centers text inside the card */
     margin-top: 20px;
+}
+
+.centered-list {
+    list-style-type: disc; /* Ensures bullet points are shown */
+    list-style-position: inside; /* Ensures bullets are inside the list */
+    padding: 0; /* Removes default padding */
+    text-align: center; /* Centers the text and bullets */
+    margin: 0; /* Removes any default margin */
+}
+
+.centered-list li {
+    display: block; /* Displays list items as block elements */
+    margin: 5px 0; /* Adds vertical space between list items */
+    text-align: center; /* Centers text within the list item */
 }
