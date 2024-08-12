@@ -22,7 +22,7 @@
 }
 
 .centered-list li {
-    display: block; /* Displays list items as block elements */
+    
     margin: 5px 0; /* Adds vertical space between list items */
     text-align: center; /* Centers text within the list item */
 }
