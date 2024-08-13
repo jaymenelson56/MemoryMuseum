@@ -37,3 +37,9 @@ export const register = (userProfile) => {
     body: JSON.stringify(userProfile),
   }).then(() => tryGetLoggedInUser());
 };
+
+export const isAdmin = () => {
+    return fetch(`${_apiUrl}/Me`)
+        .then((res) => res.json())
+        .then((user) => user.roles && user.roles.includes("Admin"));
+};
