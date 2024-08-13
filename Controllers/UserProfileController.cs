@@ -39,6 +39,27 @@ public class UserProfileController : ControllerBase
             IdentityUserId = up.IdentityUserId
         }));
     }
+    [HttpGet("InactiveUsers")]
+    // [Authorize]
+    public IActionResult GetInactiveUsers()
+    {
+        return Ok(_dbContext.UserProfiles
+        .Where(up => !up.IsActive)
+        .Include(up => up.IdentityUser)
+        .Select(up => new UserProfile
+        {
+            Id = up.Id,
+            FirstName = up.FirstName,
+            LastName = up.LastName,
+            Address = up.Address,
+            IsActive = up.IsActive,
+            Warning = up.Warning,
+            CreateDateTime = up.CreateDateTime,
+            Email = up.IdentityUser.Email,
+            UserName = up.IdentityUser.UserName,
+            IdentityUserId = up.IdentityUserId
+        }));
+    }
 
     [HttpGet("{id}")]
     // [Authorize]
