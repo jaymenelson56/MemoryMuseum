@@ -31,49 +31,69 @@ public class AuthController : ControllerBase
         try
         {
             string encodedCreds = authHeader.Substring(6).Trim();
-            string creds = Encoding
-            .GetEncoding("iso-8859-1")
-            .GetString(Convert.FromBase64String(encodedCreds));
+            string creds = Encoding.GetEncoding("iso-8859-1").GetString(Convert.FromBase64String(encodedCreds));
 
-            // Get email and password
             int separator = creds.IndexOf(':');
             string email = creds.Substring(0, separator);
             string password = creds.Substring(separator + 1);
 
-            var user = _dbContext.Users.Where(u => u.Email == email).FirstOrDefault();
-            var userRoles = _dbContext.UserRoles.Where(ur => ur.UserId == user.Id).ToList();
+            var user = _dbContext.Users.SingleOrDefault(u => u.Email == email);
+            if (user == null) return Unauthorized();
+
+            var userProfile = _dbContext.UserProfiles.SingleOrDefault(up => up.IdentityUserId == user.Id);
+            if (userProfile == null) return Unauthorized();
+
             var hasher = new PasswordHasher<IdentityUser>();
             var result = hasher.VerifyHashedPassword(user, user.PasswordHash, password);
-            if (user != null && result == PasswordVerificationResult.Success)
+
+            if (result == PasswordVerificationResult.Success)
             {
                 var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new Claim(ClaimTypes.Name, user.UserName.ToString()),
-                    new Claim(ClaimTypes.Email, user.Email)
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.Email, user.Email)
+            };
 
-                };
-
+                var userRoles = _dbContext.UserRoles.Where(ur => ur.UserId == user.Id).ToList();
                 foreach (var userRole in userRoles)
                 {
                     var role = _dbContext.Roles.FirstOrDefault(r => r.Id == userRole.RoleId);
-                    claims.Add(new Claim(ClaimTypes.Role, role.Name));
+                    if (role != null)
+                    {
+                        claims.Add(new Claim(ClaimTypes.Role, role.Name));
+                    }
                 }
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
                 HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity)).Wait();
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    new ClaimsPrincipal(claimsIdentity)).Wait();
 
-                return Ok();
+                var userDto = new UserProfileDTO
+                {
+                    Id = userProfile.Id,
+                    FirstName = userProfile.FirstName,
+                    LastName = userProfile.LastName,
+                    Address = userProfile.Address,
+                    IdentityUserId = user.Id,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    IsActive = userProfile.IsActive,
+                    Warning = userProfile.Warning,
+                    Roles = userRoles.Select(ur => _dbContext.Roles.FirstOrDefault(r => r.Id == ur.RoleId)?.Name).ToList()
+                };
+
+                return Ok(userDto);
             }
 
-            return new UnauthorizedResult();
+            return Unauthorized();
         }
         catch (Exception ex)
         {
-            return StatusCode(500);
+            // Log the exception if needed
+            return StatusCode(500, "An error occurred while processing your request.");
         }
     }
 
@@ -97,11 +117,14 @@ public class AuthController : ControllerBase
     [Authorize]
     public IActionResult Me()
     {
-        var identityUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var profile = _dbContext.UserProfiles.SingleOrDefault(up => up.IdentityUserId == identityUserId);
-        var roles = User.FindAll(ClaimTypes.Role).Select(r => r.Value).ToList();
-        if (profile != null)
+        try
         {
+            var identityUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var profile = _dbContext.UserProfiles.SingleOrDefault(up => up.IdentityUserId == identityUserId);
+            if (profile == null) return NotFound();
+
+            var roles = User.FindAll(ClaimTypes.Role).Select(r => r.Value).ToList();
+
             var userDto = new UserProfileDTO
             {
                 Id = profile.Id,
@@ -111,12 +134,18 @@ public class AuthController : ControllerBase
                 IdentityUserId = identityUserId,
                 UserName = User.FindFirstValue(ClaimTypes.Name),
                 Email = User.FindFirstValue(ClaimTypes.Email),
-                Roles = roles
+                Roles = roles,
+                IsActive = profile.IsActive,
+                Warning = profile.Warning
             };
 
             return Ok(userDto);
         }
-        return NotFound();
+        catch (Exception ex)
+        {
+            // Log the exception if needed
+            return StatusCode(500, "An error occurred while processing your request.");
+        }
     }
 
     [HttpPost("register")]

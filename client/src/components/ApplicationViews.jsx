@@ -14,6 +14,8 @@ import Unauthorized from "./auth/Unauthorized";
 import { StorageRoom } from "./Items/StorageRoom";
 import { UserProfileList } from "./UserProfiles/UserProfileList";
 import { UserProfileDetails } from "./UserProfiles/UserProfileDetails";
+import { InactiveRoute } from "./auth/InActiveRoute";
+import { InactivePage } from "./auth/InActivePage";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -23,7 +25,9 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           index
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
-              <Home />
+              <InactiveRoute loggedInUser={loggedInUser}>
+                <Home />
+              </InactiveRoute>
             </AuthorizedRoute>
           }
         />
@@ -41,7 +45,9 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           index
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
-              <ExhibitList />
+              <InactiveRoute loggedInUser={loggedInUser}>
+                <ExhibitList />
+              </InactiveRoute>
             </AuthorizedRoute>
           }
         />
@@ -49,7 +55,9 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           path=":id"
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
-              <ExhibitHall loggedInUser={loggedInUser} />
+              <InactiveRoute loggedInUser={loggedInUser}>
+                <ExhibitHall loggedInUser={loggedInUser} />
+              </InactiveRoute>
             </AuthorizedRoute>
           }
         />
@@ -57,7 +65,9 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           path="create"
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
-              <CreateExhibit loggedInUser={loggedInUser} />
+              <InactiveRoute loggedInUser={loggedInUser}>
+                <CreateExhibit loggedInUser={loggedInUser} />
+              </InactiveRoute>
             </AuthorizedRoute>
           }
         />
@@ -67,7 +77,9 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           index
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
-              <CreateItem loggedInUser={loggedInUser} />
+              <InactiveRoute loggedInUser={loggedInUser}>
+                <CreateItem loggedInUser={loggedInUser} />
+              </InactiveRoute>
             </AuthorizedRoute>
           }
         />
@@ -75,7 +87,9 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           path="details/:id"
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
-              <ItemDetails loggedInUser={loggedInUser} />
+              <InactiveRoute loggedInUser={loggedInUser}>
+                <ItemDetails loggedInUser={loggedInUser} />
+              </InactiveRoute>
             </AuthorizedRoute>
           }
         />
@@ -83,7 +97,9 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           path="edit/:id"
           element={
             <AuthorizedItemRoute loggedInUser={loggedInUser}>
-              <EditItem loggedInUser={loggedInUser} />
+              <InactiveRoute loggedInUser={loggedInUser}>
+                <EditItem loggedInUser={loggedInUser} />
+              </InactiveRoute>
             </AuthorizedItemRoute>
           }
         />
@@ -92,28 +108,31 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
         path="storage-room"
         element={
           <AuthorizedRoute loggedInUser={loggedInUser}>
-            <StorageRoom loggedInUser={loggedInUser} />
+            <InactiveRoute loggedInUser={loggedInUser}>
+              <StorageRoom loggedInUser={loggedInUser} />
+            </InactiveRoute>
           </AuthorizedRoute>
         }
       />
       <Route
-        path="userprofiles">
-        <Route index
-          element={
-            <AuthorizedRoute loggedInUser={loggedInUser}>
+        path="userprofiles"
+        element={
+          <AuthorizedRoute loggedInUser={loggedInUser}>
+            <InactiveRoute loggedInUser={loggedInUser}>
               <UserProfileList />
-            </AuthorizedRoute>
-          }
-        />
-        <Route
-          path=":id"
-          element={
-            <AuthorizedRoute loggedInUser={loggedInUser}>
+            </InactiveRoute>
+          </AuthorizedRoute>
+        }
+      />
+      <Route path="userprofiles/:id" element={
+          <AuthorizedRoute loggedInUser={loggedInUser}>
+            <InactiveRoute loggedInUser={loggedInUser}>
               <UserProfileDetails loggedInUser={loggedInUser} />
-            </AuthorizedRoute>
-          }
-        />
-      </Route>
+            </InactiveRoute>
+          </AuthorizedRoute>
+        } 
+      />
+      <Route path="/inactive" element={<InactivePage />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
       <Route path="*" element={<p>Whoops, nothing here...</p>} />
     </Routes>
