@@ -23,6 +23,7 @@ public class UserProfileController : ControllerBase
     public IActionResult Get()
     {
         return Ok(_dbContext.UserProfiles
+        .Where(up => up.IsActive)
         .Include(up => up.IdentityUser)
         .Select(up => new UserProfile
         {
@@ -30,6 +31,8 @@ public class UserProfileController : ControllerBase
             FirstName = up.FirstName,
             LastName = up.LastName,
             Address = up.Address,
+            IsActive = up.IsActive,
+            Warning = up.Warning,
             CreateDateTime = up.CreateDateTime,
             Email = up.IdentityUser.Email,
             UserName = up.IdentityUser.UserName,
@@ -42,9 +45,9 @@ public class UserProfileController : ControllerBase
     public IActionResult GetById(int id)
     {
         UserProfile? userProfile = _dbContext.UserProfiles
+            .Where(up => up.Id == id && up.IsActive)
             .Include(up => up.IdentityUser)
             .Include(up => up.Exhibits) // Include Exhibits
-            .Where(up => up.Id == id)
             .Select(up => new UserProfile
             {
                 Id = up.Id,
@@ -52,6 +55,8 @@ public class UserProfileController : ControllerBase
                 LastName = up.LastName,
                 Address = up.Address,
                 CreateDateTime = up.CreateDateTime,
+                IsActive= up.IsActive,
+                Warning = up.Warning,
                 Email = up.IdentityUser.Email,
                 UserName = up.IdentityUser.UserName,
                 IdentityUserId = up.IdentityUserId,

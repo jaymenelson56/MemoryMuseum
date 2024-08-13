@@ -27,6 +27,9 @@ namespace MemoryMuseum.Models
         [NotMapped]
         public string Email { get; set; }
 
+        public bool IsActive { get; set; }
+        public bool Warning { get; set; }
+
         [NotMapped]
         public List<string> Roles { get; set; }
 
