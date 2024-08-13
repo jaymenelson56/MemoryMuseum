@@ -43,6 +43,7 @@ public class ExhibitController : ControllerBase
     {
         {
             List<ExhibitDTO> exhibits = _dbContext.Exhibits
+                .Where(e => e.UserProfile.IsActive)
                 .Include(e => e.UserProfile)
                 .ThenInclude(up => up.IdentityUser)
                 .Include(e => e.ExhibitRatings)
@@ -60,6 +61,7 @@ public class ExhibitController : ControllerBase
                         Address = e.UserProfile.Address,
                         Email = e.UserProfile.IdentityUser.Email,
                         CreateDateTime = e.UserProfile.CreateDateTime,
+                        IsActive = e.UserProfile.IsActive,
                         UserName = e.UserProfile.IdentityUser.UserName,
                         IdentityUserId = e.UserProfile.IdentityUserId
                     },
@@ -86,41 +88,42 @@ public class ExhibitController : ControllerBase
     public IActionResult GetExhibitById(int id)
     {
         ExhibitDTO? exhibit = _dbContext.Exhibits
-            .Include(e => e.UserProfile)
-                .ThenInclude(up => up.IdentityUser)
-            .Include(e => e.ExhibitRatings)
-                .ThenInclude(er => er.Rating)
-            .Include(e => e.Items)
-            .Where(e => e.Id == id)
-            .Select(e => new ExhibitDTO
+        .Where(e => e.Id == id && e.UserProfile.IsActive)
+        .Include(e => e.UserProfile)
+            .ThenInclude(up => up.IdentityUser)
+        .Include(e => e.ExhibitRatings)
+            .ThenInclude(er => er.Rating)
+        .Include(e => e.Items)
+        .Select(e => new ExhibitDTO
+        {
+            Id = e.Id,
+            Name = e.Name,
+            UserProfileId = e.UserProfileId,
+            UserProfile = new UserProfileDTO
             {
-                Id = e.Id,
-                Name = e.Name,
-                UserProfileId = e.UserProfileId,
-                UserProfile = new UserProfileDTO
+                Id = e.UserProfile.Id,
+                FirstName = e.UserProfile.FirstName,
+                LastName = e.UserProfile.LastName,
+                Address = e.UserProfile.Address,
+                Email = e.UserProfile.IdentityUser.Email,
+                CreateDateTime = e.UserProfile.CreateDateTime,
+                IsActive = e.UserProfile.IsActive,
+                UserName = e.UserProfile.IdentityUser.UserName,
+                IdentityUserId = e.UserProfile.IdentityUserId
+            },
+            ExhibitRatings = e.ExhibitRatings.Select(er => new ExhibitRatingDTO
+            {
+                ExhibitId = er.ExhibitId,
+                RatingId = er.RatingId,
+                UserProfileId = er.UserProfileId,
+                Rating = new RatingDTO
                 {
-                    Id = e.UserProfile.Id,
-                    FirstName = e.UserProfile.FirstName,
-                    LastName = e.UserProfile.LastName,
-                    Address = e.UserProfile.Address,
-                    Email = e.UserProfile.IdentityUser.Email,
-                    CreateDateTime = e.UserProfile.CreateDateTime,
-                    UserName = e.UserProfile.IdentityUser.UserName,
-                    IdentityUserId = e.UserProfile.IdentityUserId
-                },
-                ExhibitRatings = e.ExhibitRatings.Select(er => new ExhibitRatingDTO
-                {
-                    ExhibitId = er.ExhibitId,
-                    RatingId = er.RatingId,
-                    UserProfileId = er.UserProfileId,
-                    Rating = new RatingDTO
-                    {
-                        Id = er.Rating.Id,
-                        RatingName = er.Rating.RatingName,
-                        Value = er.Rating.Value
-                    }
-                }).ToList(),
-                Items = e.Items
+                    Id = er.Rating.Id,
+                    RatingName = er.Rating.RatingName,
+                    Value = er.Rating.Value
+                }
+            }).ToList(),
+            Items = e.Items
                 .Where(i => i.Approved)
                 .OrderBy(i => i.DatePublished)
                 .Select(i => new ItemDTO
@@ -135,7 +138,7 @@ public class ExhibitController : ControllerBase
                     UserProfileId = i.UserProfileId,
                     ExhibitId = i.ExhibitId,
                 }).ToList()
-            }).FirstOrDefault();
+        }).FirstOrDefault();
 
         if (exhibit == null)
         {
