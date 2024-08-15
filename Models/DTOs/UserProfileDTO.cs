@@ -17,7 +17,6 @@ public class UserProfileDTO
     public List<string> Roles { get; set; }
 
     public bool IsActive { get; set; }
-    public bool Warning { get; set; }
 
 
     public string IdentityUserId { get; set; }
