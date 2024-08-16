@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
+  Button,
   Card,
   CardBody,
   CardHeader,
@@ -31,6 +32,7 @@ export const UserProfileDetails = () => {
         <Card className="main-card">
           <CardBody>
             <CardHeader>{userProfile.userName}</CardHeader>
+            <CardHeader><Button>Activate</Button></CardHeader>
             <ListGroup flush>
               <ListGroupItem>
                 Name: <b>{userProfile?.fullName}</b>
@@ -46,6 +48,9 @@ export const UserProfileDetails = () => {
               </ListGroupItem>
               <ListGroupItem>
                 Email: <b>{userProfile.email}</b>
+              </ListGroupItem>
+              <ListGroupItem>
+                User Type: <b>Member</b>
               </ListGroupItem>
               <ListGroupItem>
                 <b>List of Exhibits</b>:

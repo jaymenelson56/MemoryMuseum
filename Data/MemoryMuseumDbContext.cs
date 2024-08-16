@@ -13,6 +13,7 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
     public DbSet<Item> Items { get; set; }
     public DbSet<Rating> Ratings { get; set; }
     public DbSet<ExhibitRating> ExhibitRatings { get; set; }
+    public DbSet<Report> Reports { get; set; }
 
     public MemoryMuseumDbContext(DbContextOptions<MemoryMuseumDbContext> context, IConfiguration config) : base(context)
     {
@@ -96,9 +97,8 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
             FirstName = "Jayme",
             LastName = "Chaka",
             Address = "101 Dalmations",
-            CreateDateTime = new DateTime(2022, 6, 1, 14, 30, 0),
-            IsActive = true,
-            Warning = false
+            CreateDateTime = new DateTime(2024, 1, 1, 14, 30, 0),
+            IsActive = true
         },
         new UserProfile
         {
@@ -107,9 +107,8 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
             FirstName = "Kaya",
             LastName = "Chaka",
             Address = "101 Dalmations",
-            CreateDateTime = new DateTime(2022, 6, 1, 14, 30, 0),
-            IsActive = true,
-            Warning = false
+            CreateDateTime = new DateTime(2024, 1, 1, 14, 30, 0),
+            IsActive = true
         },
         new UserProfile
         {
@@ -118,9 +117,8 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
             FirstName = "Fox",
             LastName = "Gaba",
             Address = "101 Dalmations",
-            CreateDateTime = new DateTime(2022, 6, 1, 14, 30, 0),
-            IsActive = true,
-            Warning = false
+            CreateDateTime = new DateTime(2024, 6, 1, 14, 30, 0),
+            IsActive = true
         },
         new UserProfile
         {
@@ -129,9 +127,8 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
             FirstName = "Angry",
             LastName = "Noodle",
             Address = "101 Ramen Way",
-            CreateDateTime = new DateTime(2022, 6, 1, 14, 30, 0),
-            IsActive = false,
-            Warning = false
+            CreateDateTime = new DateTime(2024, 8, 1, 14, 30, 0),
+            IsActive = false
         },
         new UserProfile
         {
@@ -140,11 +137,10 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
             FirstName = "La",
             LastName = "Campana",
             Address = "101 Bell Blvd",
-            CreateDateTime = new DateTime(2022, 6, 1, 14, 30, 0),
-            IsActive = false,
-            Warning = true
+            CreateDateTime = new DateTime(2024, 8, 1, 14, 30, 0),
+            IsActive = false
         },
-        
+
    });
 
 
@@ -162,6 +158,18 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
             Name = "Hall of Dog Toys",
             UserProfileId = 2
         },
+        new Exhibit
+        {
+            Id = 3,
+            Name = "Hall of Dog Stuff I Found",
+            UserProfileId = 3
+        },
+        new Exhibit
+        {
+            Id = 4,
+            Name = "Hall of Noodles",
+            UserProfileId = 4
+        },
         });
 
 
@@ -175,7 +183,7 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
             UserProfileId = 1,
             ExhibitId = 1,
             Placard = "Although this was made back in 2020, this machine mimics those built in the 1980s. This one is Mario themed and contains the game ball, as well as Super Mario Bros, and Super Mario Bros. 2(Lost Levels) They didn't have that back then!",
-            DatePublished = new DateTime(2022, 6, 2, 14, 30, 0),
+            DatePublished = new DateTime(2024, 6, 2, 14, 30, 0),
             NeedsApproval = false,
             Approved = true
         },
@@ -187,7 +195,7 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
             UserProfileId = 1,
             ExhibitId = 1,
             Placard = "First Released in 2004, this one has wear and tear on it, literally. The screen has been worn. During some of the best years in gaming this device has seen better days.",
-            DatePublished = new DateTime(2022, 6, 2, 14, 30, 0),
+            DatePublished = new DateTime(2024, 6, 2, 14, 30, 0),
             NeedsApproval = false,
             Approved = true
         },
@@ -199,7 +207,7 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
             UserProfileId = 2,
             ExhibitId = 2,
             Placard = "This is my favorite toy in life. Woody the Woodpecker. Jayme actually bought me three of these this is the third one. He does his trade mark laugh drives me mad.",
-            DatePublished = new DateTime(2022, 6, 2, 14, 30, 0),
+            DatePublished = new DateTime(2024, 6, 2, 14, 30, 0),
             NeedsApproval = false,
             Approved = true
         },
@@ -211,7 +219,31 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
             UserProfileId = 2,
             ExhibitId = 2,
             Placard = "From that Jurrassic movie I never saw. I really loved this toy. So I am putting it here on display for you all. Please do not squeak it.",
-            DatePublished = new DateTime(2022, 6, 2, 14, 30, 0),
+            DatePublished = new DateTime(2024, 6, 2, 14, 30, 0),
+            NeedsApproval = false,
+            Approved = true
+        },
+        new Item
+        {
+            Id = 5,
+            Image = "/images/darkdoorway.jpg",
+            Name = "Hidden Doorway",
+            UserProfileId = 3,
+            ExhibitId = 3,
+            Placard = "This creepy door has a bunch of cool stuff. I get my exhibit items here",
+            DatePublished = new DateTime(2024, 6, 2, 14, 30, 0),
+            NeedsApproval = false,
+            Approved = true
+        },
+        new Item
+        {
+            Id = 6,
+            Image = "/images/gumbyplay.jpg",
+            Name = "Gumby Toy",
+            UserProfileId = 3,
+            ExhibitId = 3,
+            Placard = "I am pretty sure this is Gumby.",
+            DatePublished = new DateTime(2024, 6, 2, 14, 30, 0),
             NeedsApproval = false,
             Approved = true
         },
@@ -249,6 +281,18 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
             Id = 5,
             RatingName = "Awesome",
             Value = 5
+        },
+        });
+
+        modelBuilder.Entity<Report>().HasData(new Report[]
+        {
+        new Report
+        {
+            Id = 1,
+            Body = "Fox is a good boy",
+            ReportAuthorId = 1,
+            ReportSubjectId = 3,
+            Closed= true
         },
         });
 

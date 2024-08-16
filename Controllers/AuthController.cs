@@ -81,7 +81,6 @@ public class AuthController : ControllerBase
                     UserName = user.UserName,
                     Email = user.Email,
                     IsActive = userProfile.IsActive,
-                    Warning = userProfile.Warning,
                     Roles = userRoles.Select(ur => _dbContext.Roles.FirstOrDefault(r => r.Id == ur.RoleId)?.Name).ToList()
                 };
 
@@ -135,8 +134,7 @@ public class AuthController : ControllerBase
                 UserName = User.FindFirstValue(ClaimTypes.Name),
                 Email = User.FindFirstValue(ClaimTypes.Email),
                 Roles = roles,
-                IsActive = profile.IsActive,
-                Warning = profile.Warning
+                IsActive = profile.IsActive
             };
 
             return Ok(userDto);

@@ -32,7 +32,6 @@ public class UserProfileController : ControllerBase
             LastName = up.LastName,
             Address = up.Address,
             IsActive = up.IsActive,
-            Warning = up.Warning,
             CreateDateTime = up.CreateDateTime,
             Email = up.IdentityUser.Email,
             UserName = up.IdentityUser.UserName,
@@ -53,7 +52,6 @@ public class UserProfileController : ControllerBase
             LastName = up.LastName,
             Address = up.Address,
             IsActive = up.IsActive,
-            Warning = up.Warning,
             CreateDateTime = up.CreateDateTime,
             Email = up.IdentityUser.Email,
             UserName = up.IdentityUser.UserName,
@@ -76,8 +74,7 @@ public class UserProfileController : ControllerBase
                 LastName = up.LastName,
                 Address = up.Address,
                 CreateDateTime = up.CreateDateTime,
-                IsActive= up.IsActive,
-                Warning = up.Warning,
+                IsActive = up.IsActive,
                 Email = up.IdentityUser.Email,
                 UserName = up.IdentityUser.UserName,
                 IdentityUserId = up.IdentityUserId,
@@ -94,6 +91,22 @@ public class UserProfileController : ControllerBase
         {
             return NotFound();
         }
+
+        return Ok(userProfile);
+    }
+
+    [HttpPut("ToggleIsActive/{id}")]
+    public IActionResult ToggleIsActive(int id)
+    {
+        var userProfile = _dbContext.UserProfiles.FirstOrDefault(up => up.Id == id);
+
+        if (userProfile == null)
+        {
+            return NotFound();
+        }
+
+        userProfile.IsActive = !userProfile.IsActive;
+        _dbContext.SaveChanges();
 
         return Ok(userProfile);
     }
