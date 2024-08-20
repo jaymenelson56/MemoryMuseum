@@ -10,16 +10,33 @@ import {
   ListGroupItem,
   Table,
 } from "reactstrap";
-import { getUsersById } from "../../managers/userProfileManager";
+import { getUsersById, toggleUserIsActive } from "../../managers/userProfileManager";
 import "./UserProfile.css";
 
-export const UserProfileDetails = () => {
+export const UserProfileDetails = ({ loggedInUser }) => {
   const [userProfile, setUserProfile] = useState({});
   const { id } = useParams();
 
   useEffect(() => {
     getUsersById(id).then(setUserProfile);
   }, [id]);
+  const isAdmin =
+    Array.isArray(userProfile.roles) && userProfile.roles.includes("Admin");
+  const userType = isAdmin ? "Administrator" : "Member";
+  const isActive = userProfile.isActive;
+  const isUserAdmin =
+    Array.isArray(loggedInUser.roles) && loggedInUser.roles.includes("Admin");
+
+  const handleToggleStatus = async () => {
+    try {
+      await toggleUserIsActive(id);
+      // Reload user profile after status change
+      const updatedProfile = await getUsersById(id);
+      setUserProfile(updatedProfile);
+    } catch (error) {
+      console.error("Error toggling user status:", error);
+    }
+  };
 
   if (!userProfile) {
     return null;
@@ -32,7 +49,7 @@ export const UserProfileDetails = () => {
         <Card className="main-card">
           <CardBody>
             <CardHeader>{userProfile.userName}</CardHeader>
-            <CardHeader><Button>Activate</Button></CardHeader>
+
             <ListGroup flush>
               <ListGroupItem>
                 Name: <b>{userProfile?.fullName}</b>
@@ -50,7 +67,20 @@ export const UserProfileDetails = () => {
                 Email: <b>{userProfile.email}</b>
               </ListGroupItem>
               <ListGroupItem>
-                User Type: <b>Member</b>
+                User Type: <b>{userType}</b>
+              </ListGroupItem>
+              <ListGroupItem>
+                Status:
+                {isUserAdmin ? (
+                  <Button
+                    color={isActive ? "success" : "danger"}
+                    onClick={handleToggleStatus}
+                  >
+                    {isActive ? "Active" : "Deactivated"}
+                  </Button>
+                ) : (
+                  <b> {isActive ? "Active" : "Deactivated"}</b>
+                )}
               </ListGroupItem>
               <ListGroupItem>
                 <b>List of Exhibits</b>:
