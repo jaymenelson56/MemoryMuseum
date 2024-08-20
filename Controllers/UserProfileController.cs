@@ -24,6 +24,7 @@ public class UserProfileController : ControllerBase
     {
         return Ok(_dbContext.UserProfiles
         .Where(up => up.IsActive)
+        .OrderBy(up => up.CreateDateTime)
         .Include(up => up.IdentityUser)
         .Select(up => new UserProfile
         {

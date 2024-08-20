@@ -8,13 +8,21 @@ import {
   CardTitle,
   ListGroup,
   ListGroupItem,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
   Table,
 } from "reactstrap";
-import { getUsersById, toggleUserIsActive } from "../../managers/userProfileManager";
+import {
+  getUsersById,
+  toggleUserIsActive,
+} from "../../managers/userProfileManager";
 import "./UserProfile.css";
 
 export const UserProfileDetails = ({ loggedInUser }) => {
   const [userProfile, setUserProfile] = useState({});
+  const [modalOpen, setModalOpen] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
@@ -26,13 +34,16 @@ export const UserProfileDetails = ({ loggedInUser }) => {
   const isActive = userProfile.isActive;
   const isUserAdmin =
     Array.isArray(loggedInUser.roles) && loggedInUser.roles.includes("Admin");
+  const isSelf = loggedInUser.id === userProfile.id;
+  const toggleModal = () => setModalOpen(!modalOpen);
 
   const handleToggleStatus = async () => {
     try {
       await toggleUserIsActive(id);
-      // Reload user profile after status change
+
       const updatedProfile = await getUsersById(id);
       setUserProfile(updatedProfile);
+      toggleModal();
     } catch (error) {
       console.error("Error toggling user status:", error);
     }
@@ -45,15 +56,17 @@ export const UserProfileDetails = ({ loggedInUser }) => {
   return (
     <>
       <Card className="transparent-card">
-        <h2>{userProfile.userName}'s Profile</h2>
+        <h2>{userProfile.userName}</h2>
+        <div className ="right-align">
+          <Button>Report User</Button>
+        </div>
         <Card className="main-card">
           <CardBody>
-            <CardHeader>{userProfile.userName}</CardHeader>
+            <CardHeader>
+              Name: <b>{userProfile?.fullName}</b>
+            </CardHeader>
 
             <ListGroup flush>
-              <ListGroupItem>
-                Name: <b>{userProfile?.fullName}</b>
-              </ListGroupItem>
               <ListGroupItem>
                 Address: <b>{userProfile.address}</b>
               </ListGroupItem>
@@ -71,13 +84,32 @@ export const UserProfileDetails = ({ loggedInUser }) => {
               </ListGroupItem>
               <ListGroupItem>
                 Status:
-                {isUserAdmin ? (
-                  <Button
-                    color={isActive ? "success" : "danger"}
-                    onClick={handleToggleStatus}
-                  >
-                    {isActive ? "Active" : "Deactivated"}
-                  </Button>
+                {isUserAdmin && !isSelf ? (
+                  <>
+                    <Button
+                      color={isActive ? "success" : "danger"}
+                      onClick={toggleModal}
+                    >
+                      {isActive ? "Active" : "Deactivated"}
+                    </Button>
+                    <Modal isOpen={modalOpen} toggle={toggleModal}>
+                      <ModalHeader toggle={toggleModal}>
+                        Confirm Status Change
+                      </ModalHeader>
+                      <ModalBody>
+                        Are you sure you want to{" "}
+                        {isActive ? "deactivate" : "activate"} this user?
+                      </ModalBody>
+                      <ModalFooter>
+                        <Button color="primary" onClick={handleToggleStatus}>
+                          Yes
+                        </Button>{" "}
+                        <Button color="secondary" onClick={toggleModal}>
+                          No
+                        </Button>
+                      </ModalFooter>
+                    </Modal>
+                  </>
                 ) : (
                   <b> {isActive ? "Active" : "Deactivated"}</b>
                 )}
