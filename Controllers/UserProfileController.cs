@@ -64,7 +64,7 @@ public class UserProfileController : ControllerBase
     public IActionResult GetById(int id)
     {
         UserProfile? userProfile = _dbContext.UserProfiles
-            .Where(up => up.Id == id && up.IsActive)
+            .Where(up => up.Id == id)
             .Include(up => up.IdentityUser)
             .Include(up => up.Exhibits) // Include Exhibits
             .Select(up => new UserProfile
@@ -78,6 +78,10 @@ public class UserProfileController : ControllerBase
                 Email = up.IdentityUser.Email,
                 UserName = up.IdentityUser.UserName,
                 IdentityUserId = up.IdentityUserId,
+                Roles = _dbContext.UserRoles
+                    .Where(ur => ur.UserId == up.IdentityUserId)
+                    .Select(ur => _dbContext.Roles.SingleOrDefault(r => r.Id == ur.RoleId).Name)
+                    .ToList(),
                 Exhibits = up.Exhibits.Select(e => new Exhibit
                 {
                     Id = e.Id,

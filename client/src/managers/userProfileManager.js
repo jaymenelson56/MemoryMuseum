@@ -13,7 +13,7 @@ export const getUsersById = (id) => {
 };
 
 export const toggleUserIsActive = (id) => {
-  return fetch(`${_apiUrl}/${id}/ToggleIsActive`, {
+  return fetch(`${_apiUrl}/ToggleIsActive/${id}`, {
     method: "PUT",
   }).then((res) => res.json());
 };
