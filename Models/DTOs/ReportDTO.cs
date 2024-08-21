@@ -12,7 +12,7 @@ public class ReportDTO
 
     public bool Closed { get; set; }
 
-    public UserProfileDTO? ReportAuthor { get; set; }
+    public string? ReportAuthor { get; set; }
 
-    public UserProfileDTO? ReportSubject { get; set; }
+    public string? ReportSubject { get; set; }
 }
