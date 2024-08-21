@@ -26,13 +26,17 @@ public class ReportController : ControllerBase
         return Ok(_dbContext.Reports
         .OrderBy(r => r.Id)
         .Include(r => r.ReportAuthor)
+        .ThenInclude(ra => ra.IdentityUser)
         .Include(r => r.ReportSubject)
-        .Select(r => new Report
+        .ThenInclude(rs => rs.IdentityUser)
+        .Select(r => new ReportDTO
         {
             Id = r.Id,
             Body = r.Body,
             ReportAuthorId = r.ReportAuthorId,
             ReportSubjectId = r.ReportSubjectId,
+            ReportAuthor = r.ReportAuthor.IdentityUser.UserName,
+            ReportSubject = r.ReportSubject.IdentityUser.UserName,
             Closed = r.Closed
 
         }));
