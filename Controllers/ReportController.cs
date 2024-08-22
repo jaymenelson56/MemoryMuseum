@@ -41,4 +41,33 @@ public class ReportController : ControllerBase
 
         }));
     }
+
+    [HttpGet("{id}")]
+    public IActionResult GetById(int id)
+    {
+        var report = _dbContext.Reports
+            .Include(r => r.ReportAuthor)
+            .ThenInclude(ra => ra.IdentityUser)
+            .Include(r => r.ReportSubject)
+            .ThenInclude(rs => rs.IdentityUser)
+            .Select(r => new ReportDTO
+            {
+                Id = r.Id,
+                Body = r.Body,
+                ReportAuthorId = r.ReportAuthorId,
+                ReportSubjectId = r.ReportSubjectId,
+                ReportAuthor = r.ReportAuthor.IdentityUser.UserName,
+                ReportSubject = r.ReportSubject.IdentityUser.UserName,
+                Closed = r.Closed
+            })
+            .FirstOrDefault(r => r.Id == id);
+
+        if (report == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(report);
+    }
+
 }
