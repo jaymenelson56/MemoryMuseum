@@ -104,7 +104,25 @@ public IActionResult Post([FromBody] CreateReportDTO createReportDTO)
         Closed = newReport.Closed
     };
 
-    // Return the created report details with a 201 Created status code
+    
     return CreatedAtAction(nameof(GetById), new { id = newReport.Id }, reportDTO);
+}
+
+[HttpDelete("id")]
+//Authorize
+
+public IActionResult DeleteReport(int id)
+{
+    Report? existingReport = _dbContext.Reports.Find(id);
+    if (existingReport == null)
+    {
+        return NotFound();
+    }
+
+    _dbContext.Reports.Remove(existingReport);
+    _dbContext.SaveChanges();
+
+    return NoContent();
+    
 }
 }
