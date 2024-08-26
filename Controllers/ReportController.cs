@@ -70,4 +70,41 @@ public class ReportController : ControllerBase
         return Ok(report);
     }
 
+    [HttpPost]
+public IActionResult Post([FromBody] CreateReportDTO createReportDTO)
+{
+    if (!ModelState.IsValid)
+    {
+        return BadRequest(ModelState);
+    }
+
+    Report newReport = new Report
+    {
+        Body = createReportDTO.Body,
+        ReportAuthorId = createReportDTO.ReportAuthorId,
+        ReportSubjectId = createReportDTO.ReportSubjectId,
+        Closed = false
+    };
+
+    _dbContext.Reports.Add(newReport);
+    _dbContext.SaveChanges();
+
+    ReportDTO reportDTO = new ReportDTO
+    {
+        Id = newReport.Id,
+        Body = newReport.Body,
+        ReportAuthorId = newReport.ReportAuthorId,
+        ReportSubjectId = newReport.ReportSubjectId,
+        ReportAuthor = _dbContext.UserProfiles
+            .Include(u => u.IdentityUser)
+            .FirstOrDefault(u => u.Id == newReport.ReportAuthorId)?.IdentityUser.UserName,
+        ReportSubject = _dbContext.UserProfiles
+            .Include(u => u.IdentityUser)
+            .FirstOrDefault(u => u.Id == newReport.ReportSubjectId)?.IdentityUser.UserName,
+        Closed = newReport.Closed
+    };
+
+    // Return the created report details with a 201 Created status code
+    return CreatedAtAction(nameof(GetById), new { id = newReport.Id }, reportDTO);
+}
 }
