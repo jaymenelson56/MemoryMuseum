@@ -71,58 +71,79 @@ public class ReportController : ControllerBase
     }
 
     [HttpPost]
-public IActionResult Post([FromBody] CreateReportDTO createReportDTO)
-{
-    if (!ModelState.IsValid)
+    public IActionResult Post([FromBody] CreateReportDTO createReportDTO)
     {
-        return BadRequest(ModelState);
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        Report newReport = new Report
+        {
+            Body = createReportDTO.Body,
+            ReportAuthorId = createReportDTO.ReportAuthorId,
+            ReportSubjectId = createReportDTO.ReportSubjectId,
+            Closed = false
+        };
+
+        _dbContext.Reports.Add(newReport);
+        _dbContext.SaveChanges();
+
+        ReportDTO reportDTO = new ReportDTO
+        {
+            Id = newReport.Id,
+            Body = newReport.Body,
+            ReportAuthorId = newReport.ReportAuthorId,
+            ReportSubjectId = newReport.ReportSubjectId,
+            ReportAuthor = _dbContext.UserProfiles
+                .Include(u => u.IdentityUser)
+                .FirstOrDefault(u => u.Id == newReport.ReportAuthorId)?.IdentityUser.UserName,
+            ReportSubject = _dbContext.UserProfiles
+                .Include(u => u.IdentityUser)
+                .FirstOrDefault(u => u.Id == newReport.ReportSubjectId)?.IdentityUser.UserName,
+            Closed = newReport.Closed
+        };
+
+
+        return CreatedAtAction(nameof(GetById), new { id = newReport.Id }, reportDTO);
     }
 
-    Report newReport = new Report
+    [HttpDelete("id")]
+    //Authorize
+
+    public IActionResult DeleteReport(int id)
     {
-        Body = createReportDTO.Body,
-        ReportAuthorId = createReportDTO.ReportAuthorId,
-        ReportSubjectId = createReportDTO.ReportSubjectId,
-        Closed = false
-    };
+        Report? existingReport = _dbContext.Reports.Find(id);
+        if (existingReport == null)
+        {
+            return NotFound();
+        }
 
-    _dbContext.Reports.Add(newReport);
-    _dbContext.SaveChanges();
+        _dbContext.Reports.Remove(existingReport);
+        _dbContext.SaveChanges();
 
-    ReportDTO reportDTO = new ReportDTO
-    {
-        Id = newReport.Id,
-        Body = newReport.Body,
-        ReportAuthorId = newReport.ReportAuthorId,
-        ReportSubjectId = newReport.ReportSubjectId,
-        ReportAuthor = _dbContext.UserProfiles
-            .Include(u => u.IdentityUser)
-            .FirstOrDefault(u => u.Id == newReport.ReportAuthorId)?.IdentityUser.UserName,
-        ReportSubject = _dbContext.UserProfiles
-            .Include(u => u.IdentityUser)
-            .FirstOrDefault(u => u.Id == newReport.ReportSubjectId)?.IdentityUser.UserName,
-        Closed = newReport.Closed
-    };
+        return NoContent();
 
-    
-    return CreatedAtAction(nameof(GetById), new { id = newReport.Id }, reportDTO);
-}
-
-[HttpDelete("id")]
-//Authorize
-
-public IActionResult DeleteReport(int id)
-{
-    Report? existingReport = _dbContext.Reports.Find(id);
-    if (existingReport == null)
-    {
-        return NotFound();
     }
 
-    _dbContext.Reports.Remove(existingReport);
-    _dbContext.SaveChanges();
+    [HttpPut("{id}/close")]
+    public IActionResult CloseReport(int id)
+    {
+        var report = _dbContext.Reports.FirstOrDefault(r => r.Id == id);
 
-    return NoContent();
-    
-}
+        if (report == null)
+        {
+            return NotFound();
+        }
+
+        if (report.Closed)
+        {
+            return BadRequest("Report is already closed.");
+        }
+
+        report.Closed = true;
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
 }
