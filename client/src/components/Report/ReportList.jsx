@@ -1,11 +1,22 @@
+import { useEffect, useState } from "react";
 import { Card, Table } from "reactstrap";
+import { getReports } from "../../managers/reportmanager";
+import "./Report.css";
 
 export const ReportList = () => {
+  const [reports, setReports] = useState([]);
+
+  useEffect(() => {
+    getReports()
+      .then((res) => res.json())
+      .then((data) => setReports(data))
+      .catch((error) => console.error("Error fetching reports:", error));
+  }, []);
   return (
     <>
-      <Card>
+      <Card body className="transparent-card">
         <h2>Reports</h2>
-        <Table>
+        <Table striped>
           <thead>
             <tr>
               <th>Author</th>
@@ -14,11 +25,13 @@ export const ReportList = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th></th>
-              <td></td>
-              <td></td>
-            </tr>
+            {reports.map((report) => (
+              <tr key={report.id}>
+                <td>{report.reportAuthor}</td>
+                <td>{report.reportSubject}</td>
+                <td>{report.closed ? "Closed" : "Open"}</td>
+              </tr>
+            ))}
           </tbody>
         </Table>
       </Card>

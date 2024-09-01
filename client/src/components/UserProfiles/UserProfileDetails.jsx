@@ -24,6 +24,7 @@ export const UserProfileDetails = ({ loggedInUser }) => {
   const [userProfile, setUserProfile] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getUsersById(id).then(setUserProfile);
@@ -49,6 +50,15 @@ export const UserProfileDetails = ({ loggedInUser }) => {
     }
   };
 
+  const handleReportUser = () => {
+    navigate("/reports/create", {
+      state: {
+        reportSubjectId: userProfile.id,
+        reportSubjectName: userProfile.userName,
+      },
+    });
+  };
+
   if (!userProfile) {
     return null;
   }
@@ -57,8 +67,8 @@ export const UserProfileDetails = ({ loggedInUser }) => {
     <>
       <Card className="transparent-card">
         <h2>{userProfile.userName}</h2>
-        <div className ="right-align">
-          <Button>Report User</Button>
+        <div className="right-align">
+          <Button onClick={handleReportUser}>Report User</Button>
         </div>
         <Card className="main-card">
           <CardBody>
