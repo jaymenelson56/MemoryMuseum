@@ -78,6 +78,12 @@ public class ReportController : ControllerBase
             return BadRequest(ModelState);
         }
 
+        if (createReportDTO.ReportSubjectId <= 0)
+        {
+            ModelState.AddModelError("ReportSubjectId", "Report Subject Id must be a positive integer.");
+            return BadRequest(ModelState);
+        }
+
         Report newReport = new Report
         {
             Body = createReportDTO.Body,

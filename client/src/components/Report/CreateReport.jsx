@@ -1,11 +1,24 @@
 import { useState } from "react";
-import { Button, Card, CardHeader, Form, FormGroup, Input, Label } from "reactstrap";
+import {
+  Button,
+  Card,
+  CardHeader,
+  Form,
+  FormGroup,
+  Input,
+  Label,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+} from "reactstrap";
 import "./Report.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { newReport } from "../../managers/reportmanager";
 
 export const CreateReport = ({ loggedInUser }) => {
   const [issue, setIssue] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const subjectId = location.state?.reportSubjectId;
@@ -13,6 +26,11 @@ export const CreateReport = ({ loggedInUser }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!subjectId) {
+      alert("Subject is required to create a report."); // or use a more user-friendly way to display the error
+      return;
+    }
 
     const reportData = {
       body: issue,
@@ -22,11 +40,15 @@ export const CreateReport = ({ loggedInUser }) => {
 
     try {
       await newReport(reportData);
-      // Redirect to another page or give feedback to the user
-      navigate("/reports"); // Example redirection
+      setModalOpen(true);
     } catch (error) {
       console.error("Error creating report:", error);
     }
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+    navigate("/");
   };
 
   return (
@@ -41,7 +63,9 @@ export const CreateReport = ({ loggedInUser }) => {
             <b>Subject:</b> {subjectName}
           </CardHeader>
           <FormGroup>
-            <Label for="issue"><b>Issue:</b></Label>
+            <Label for="issue">
+              <b>Issue:</b>
+            </Label>
             <Input
               type="textarea"
               id="issue"
@@ -55,6 +79,19 @@ export const CreateReport = ({ loggedInUser }) => {
           </Button>
         </Form>
       </Card>
+
+      <Modal isOpen={modalOpen} toggle={handleModalClose}>
+        <ModalHeader toggle={handleModalClose}>Report Created</ModalHeader>
+        <ModalBody>
+          Your report has been created. The Moderation team will review and take
+          immediate action. You will be taken back to the home page.
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={handleModalClose}>
+            Ok
+          </Button>
+        </ModalFooter>
+      </Modal>
     </>
   );
 };
