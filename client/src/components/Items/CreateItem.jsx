@@ -62,7 +62,7 @@ export const CreateItem = ({ loggedInUser }) => {
     return (
         <>
             <Card className="transparent-card">
-                <h2> Create an Item</h2>
+                <h2>Create an Item</h2>
                 <Form onSubmit={handleSubmit}>
                     <FormGroup>
                         <Label>Name</Label>

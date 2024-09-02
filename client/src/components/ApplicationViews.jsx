@@ -16,6 +16,9 @@ import { UserProfileList } from "./UserProfiles/UserProfileList";
 import { UserProfileDetails } from "./UserProfiles/UserProfileDetails";
 import { InactiveRoute } from "./auth/InActiveRoute";
 import { InactivePage } from "./auth/InActivePage";
+import { ReportList } from "./Report/ReportList";
+import { ReportDetails } from "./Report/ReportDetails";
+import { CreateReport } from "./Report/CreateReport";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -124,14 +127,48 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           </AuthorizedRoute>
         }
       />
-      <Route path="userprofiles/:id" element={
+      <Route
+        path="userprofiles/:id"
+        element={
           <AuthorizedRoute loggedInUser={loggedInUser}>
             <InactiveRoute loggedInUser={loggedInUser}>
               <UserProfileDetails loggedInUser={loggedInUser} />
             </InactiveRoute>
           </AuthorizedRoute>
-        } 
+        }
       />
+      <Route path="/reports">
+        <Route
+          index
+          element={
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              <InactiveRoute loggedInUser={loggedInUser}>
+                <ReportList />
+              </InactiveRoute>
+            </AuthorizedRoute>
+          }
+        />
+        <Route
+          path=":id"
+          element={
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              <InactiveRoute loggedInUser={loggedInUser}>
+                <ReportDetails loggedInUser={loggedInUser} />
+              </InactiveRoute>
+            </AuthorizedRoute>
+          }
+        />
+        <Route
+          path="create"
+          element={
+            <AuthorizedRoute loggedInUser={loggedInUser}>
+              <InactiveRoute loggedInUser={loggedInUser}>
+                <CreateReport loggedInUser={loggedInUser} />
+              </InactiveRoute>
+            </AuthorizedRoute>
+          }
+        />
+      </Route>
       <Route path="/inactive" element={<InactivePage />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
       <Route path="*" element={<p>Whoops, nothing here...</p>} />
