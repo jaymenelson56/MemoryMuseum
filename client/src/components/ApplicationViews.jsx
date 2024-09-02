@@ -142,9 +142,14 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           index
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
-              <InactiveRoute loggedInUser={loggedInUser}>
-                <ReportList />
-              </InactiveRoute>
+              <AuthorizedItemRoute
+                loggedInUser={loggedInUser}
+                roles={["Admin"]}
+              >
+                <InactiveRoute loggedInUser={loggedInUser}>
+                  <ReportList />
+                </InactiveRoute>
+              </AuthorizedItemRoute>
             </AuthorizedRoute>
           }
         />
