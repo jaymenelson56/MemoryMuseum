@@ -22,7 +22,7 @@ export const ReportList = () => {
             <tr>
               <th>Author</th>
               <th>Subject</th>
-              <th>Details</th>
+              <th>Issue</th>
               <th>Status</th>
             
             </tr>
@@ -41,7 +41,7 @@ export const ReportList = () => {
                     {report.reportSubject}
                   </Link>
                 </td>
-                <td><Link to={`/reports/${report.id}`}>Issue</Link></td>
+                <td><Link to={`/reports/${report.id}`}>Details</Link></td>
                 <td>{report.closed ? "Closed" : "Open"}</td>
                 
               </tr>
