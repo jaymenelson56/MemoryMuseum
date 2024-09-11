@@ -50,6 +50,7 @@ public class ReportController : ControllerBase
             .ThenInclude(ra => ra.IdentityUser)
             .Include(r => r.ReportSubject)
             .ThenInclude(rs => rs.IdentityUser)
+            .OrderBy(r => r.Id)
             .Select(r => new ReportDTO
             {
                 Id = r.Id,

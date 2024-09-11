@@ -168,6 +168,8 @@ public class AuthController : ControllerBase
                 LastName = registration.LastName,
                 Address = registration.Address,
                 IdentityUserId = user.Id,
+                CreateDateTime = DateTime.Now,
+                IsActive = true,
             });
             _dbContext.SaveChanges();
 
