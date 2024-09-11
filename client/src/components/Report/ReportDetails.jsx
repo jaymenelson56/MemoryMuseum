@@ -28,7 +28,7 @@ export const ReportDetails = () => {
             <ListGroup flush>
               <ListGroupItem>Author: <b>{report?.reportAuthor}</b></ListGroupItem>
               <ListGroupItem>Issue: <b>{report?.body}</b></ListGroupItem>
-              <ListGroupItem>Open</ListGroupItem>
+              <ListGroupItem>Status: <b>{report?.closed ? "Closed" : "Open"}</b></ListGroupItem>
               <ListGroupItem>Action</ListGroupItem>
             </ListGroup>
           </CardBody>
