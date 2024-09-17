@@ -115,7 +115,7 @@ public class ReportController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = newReport.Id }, reportDTO);
     }
 
-    [HttpDelete("id")]
+    [HttpDelete("{id}")]
     //Authorize
 
     public IActionResult DeleteReport(int id)

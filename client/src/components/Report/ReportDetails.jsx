@@ -1,22 +1,49 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Button,
   Card,
   CardBody,
+  CardFooter,
   CardHeader,
   ListGroup,
   ListGroupItem,
 } from "reactstrap";
-import { getReport } from "../../managers/reportmanager";
+import {
+  closeReport,
+  deleteReport,
+  getReport,
+} from "../../managers/reportmanager";
 
 export const ReportDetails = () => {
   const [report, setReport] = useState({});
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getReport(id).then(setReport);
   }, [id]);
+
+  const handleCloseReport = async () => {
+    try {
+      await closeReport(id);
+      setReport((prevReport) => ({
+        ...prevReport,
+        closed: true,
+      }));
+    } catch (error) {
+      console.error("Failed to close the report", error);
+    }
+  };
+
+  const handleDeleteReport = async () => {
+    try {
+      await deleteReport(id);
+      navigate("/reports");
+    } catch (error) {
+      console.error("Failed to delete the report", error);
+    }
+  };
 
   return (
     <>
@@ -24,13 +51,17 @@ export const ReportDetails = () => {
         <h2>Report</h2>
         <Card>
           {report?.closed ? (
-            <div
-              style={{ padding: "10px", textAlign: "center", color: "green" }}
-            >
-              <strong>Issue resolved</strong>
+            <div>
+              <Button color="danger" onClick={handleDeleteReport}>
+                Delete Ticket
+              </Button>
             </div>
           ) : (
-            <Button color="info">Close Ticket</Button>
+            <div>
+              <Button color="info" onClick={handleCloseReport}>
+                Close Ticket
+              </Button>
+            </div>
           )}
           <CardBody>
             <CardHeader>
@@ -45,9 +76,17 @@ export const ReportDetails = () => {
                 Issue: <b>{report?.body}</b>
               </ListGroupItem>
               <ListGroupItem>
-                Status: <b>{report?.closed ? "Closed" : "Open"}</b>
+                Status:{" "}
+                <b>
+                  {report?.closed ? "Issue Resolved" : "Issue Requires Action"}
+                </b>
               </ListGroupItem>
             </ListGroup>
+            <CardFooter>
+              <Button color="secondary" onClick={() => navigate("/reports")}>
+                Back to Report List
+              </Button>
+            </CardFooter>
           </CardBody>
         </Card>
       </Card>

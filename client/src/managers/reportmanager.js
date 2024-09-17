@@ -36,3 +36,17 @@ export const closeReport = async (id) => {
 
   return response;
 };
+
+export const deleteReport = async (id) => {
+  const response = await fetch(_apiUrl + `/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    const errorDetails = `Status: ${response.status}, Message: ${response.statusText}`;
+    console.error("Failed to delete report:", errorDetails);
+    throw new Error(`Failed to delete report. ${errorDetails}`);
+  }
+
+  return response; // Return the response, even if it's 204 No Content
+};
