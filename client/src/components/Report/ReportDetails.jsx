@@ -8,6 +8,10 @@ import {
   CardHeader,
   ListGroup,
   ListGroupItem,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
 } from "reactstrap";
 import {
   closeReport,
@@ -19,6 +23,11 @@ export const ReportDetails = () => {
   const [report, setReport] = useState({});
   const { id } = useParams();
   const navigate = useNavigate();
+  const [closeReportModal, setCloseReportModal] = useState(false);
+  const [deleteReportModal, setDeleteReportModal] = useState(false);
+
+  const toggleCloseReportModal = () => setCloseReportModal(!closeReportModal);
+  const toggleDeleteReportModal = () => setDeleteReportModal(!deleteReportModal);
 
   useEffect(() => {
     getReport(id).then(setReport);
@@ -31,6 +40,7 @@ export const ReportDetails = () => {
         ...prevReport,
         closed: true,
       }));
+      toggleCloseReportModal();
     } catch (error) {
       console.error("Failed to close the report", error);
     }
@@ -52,13 +62,13 @@ export const ReportDetails = () => {
         <Card>
           {report?.closed ? (
             <div>
-              <Button color="danger" onClick={handleDeleteReport}>
+              <Button color="danger" onClick={toggleDeleteReportModal}>
                 Delete Ticket
               </Button>
             </div>
           ) : (
             <div>
-              <Button color="info" onClick={handleCloseReport}>
+              <Button color="info" onClick={toggleCloseReportModal}>
                 Close Ticket
               </Button>
             </div>
@@ -90,6 +100,31 @@ export const ReportDetails = () => {
           </CardBody>
         </Card>
       </Card>
+      <Modal isOpen={closeReportModal} toggle={toggleCloseReportModal}>
+        <ModalHeader toggle={toggleCloseReportModal}>Close Report</ModalHeader>
+        <ModalBody>
+        Are you sure you have taken appropriate action and want to close this report?
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={handleCloseReport}>Yes, Close this Report</Button>{" "}
+          <Button color="secondary" onClick={toggleCloseReportModal}>Cancel</Button>
+        </ModalFooter>
+      </Modal>
+
+      <Modal isOpen={deleteReportModal} toggle={toggleDeleteReportModal}>
+        <ModalHeader toggle={toggleDeleteReportModal}>Delete Report</ModalHeader>
+        <ModalBody>
+          Are you sure you want to delete this report from the records?
+        </ModalBody>
+        <ModalFooter>
+          <Button color="danger" onClick={handleDeleteReport}>
+            Yes, Delete Report
+          </Button>{" "}
+          <Button color="secondary" onClick={toggleDeleteReportModal}>
+            Cancel
+          </Button>
+        </ModalFooter>
+      </Modal>
     </>
   );
 };
