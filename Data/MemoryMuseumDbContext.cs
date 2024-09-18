@@ -86,6 +86,11 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
                     RoleId = "c3aaeb97-d2ba-4a53-a521-4eea61e59b35",
                     UserId = "d8d76512-74f1-43bb-b1fd-87d3a8aa36df"
                 },
+                new IdentityUserRole<string>
+                {
+                    RoleId = "c3aaeb97-d2ba-4a53-a521-4eea61e59b35",
+                    UserId = "a7d21fac-3b21-454a-a747-075f072d0cf3"
+                },
             });
 
         modelBuilder.Entity<UserProfile>().HasData(new UserProfile[]

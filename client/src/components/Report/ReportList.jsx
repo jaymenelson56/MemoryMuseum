@@ -41,7 +41,7 @@ export const ReportList = () => {
                     {report.reportSubject}
                   </Link>
                 </td>
-                <td><Link to={`/reports/${report.id}`}>Details</Link></td>
+                <td><Link to={`/reports/${report.id}`}>Click here for details</Link></td>
                 <td>{report.closed ? "Closed" : "Open"}</td>
                 
               </tr>
