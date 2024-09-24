@@ -25,6 +25,7 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
         </NavbarBrand>
         {loggedInUser ? (
           <>
+          
             <NavbarToggler onClick={toggleNavbar} />
             <Collapse isOpen={open} navbar>
               <Nav navbar>

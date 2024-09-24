@@ -29,7 +29,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
               <InactiveRoute loggedInUser={loggedInUser}>
-                <Home />
+                <Home loggedInUser={loggedInUser}/>
               </InactiveRoute>
             </AuthorizedRoute>
           }
