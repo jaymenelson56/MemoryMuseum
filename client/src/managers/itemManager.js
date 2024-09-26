@@ -34,6 +34,10 @@ export const getPendingItems = async (id) => {
 };
 
 export const getRejectedItems = async (id) => {
+    return await fetch(_apiUrl + `/rejected/${id}`).then((res) => res.json());
+};
+
+export const getNotApprovedItems = async (id) => {
     return await fetch(_apiUrl + `/not-approved/${id}`).then((res) => res.json());
 };
 
