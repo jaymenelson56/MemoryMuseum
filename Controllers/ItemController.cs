@@ -21,11 +21,11 @@ public class ItemController : ControllerBase
 
     [HttpPost]
     // Authorize
-    public async Task<IActionResult> CreateItem([FromForm] string name, 
-    [FromForm] int userProfileId, 
-    [FromForm] int exhibitId, 
+    public async Task<IActionResult> CreateItem([FromForm] string name,
+    [FromForm] int userProfileId,
+    [FromForm] int exhibitId,
     [FromForm] string placard,
-    [FromForm] IFormFile image = null, 
+    [FromForm] IFormFile image = null,
     [FromForm] string imageUrl = null)
     {
         if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(placard))
@@ -247,7 +247,48 @@ public class ItemController : ControllerBase
             .Include(i => i.Exhibit)
                 .ThenInclude(e => e.UserProfile)
                     .ThenInclude(up => up.IdentityUser)
-            .Where(i => i.Approved == false && i.UserProfileId == id)
+            .Where(i => i.Approved == false && i.NeedsApproval == true && i.UserProfileId == id)
+            .Select(i => new ItemDTO
+            {
+                Id = i.Id,
+                Image = i.Image,
+                Name = i.Name,
+                UserProfileId = i.UserProfileId,
+                ExhibitId = i.ExhibitId,
+                Placard = i.Placard,
+                DatePublished = i.DatePublished,
+                NeedsApproval = i.NeedsApproval,
+                Approved = i.Approved,
+                Exhibit = new ExhibitDTO
+                {
+                    Id = i.Exhibit.Id,
+                    Name = i.Exhibit.Name,
+                    UserProfileId = i.Exhibit.UserProfileId,
+                    UserProfile = new UserProfileDTO
+                    {
+                        Id = i.Exhibit.UserProfile.Id,
+                        FirstName = i.Exhibit.UserProfile.FirstName,
+                        LastName = i.Exhibit.UserProfile.LastName,
+                        Address = i.Exhibit.UserProfile.Address,
+                        Email = i.Exhibit.UserProfile.IdentityUser.Email,
+                        CreateDateTime = i.Exhibit.UserProfile.CreateDateTime,
+                        UserName = i.Exhibit.UserProfile.IdentityUser.UserName,
+                        IdentityUserId = i.Exhibit.UserProfile.IdentityUserId
+                    }
+                },
+            }).ToList();
+
+        return Ok(items);
+    }
+
+    [HttpGet("rejected/{id}")]
+    public IActionResult GetRejectedItems(int id)
+    {
+        List<ItemDTO> items = _dbContext.Items
+            .Include(i => i.Exhibit)
+                .ThenInclude(e => e.UserProfile)
+                    .ThenInclude(up => up.IdentityUser)
+            .Where(i => i.Approved == false && i.NeedsApproval == false && i.UserProfileId == id)
             .Select(i => new ItemDTO
             {
                 Id = i.Id,
