@@ -356,4 +356,40 @@ public class ItemController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpPut("change-exhibit/{id}")]
+    public IActionResult ChangeExhibit(int id, [FromForm] int newExhibitId, [FromForm] int loggedInUserId)
+    {
+        Item existingItem = _dbContext.Items.Find(id);
+        if (existingItem == null)
+        {
+            return NotFound("Item not found.");
+        }
+
+        var newExhibit = _dbContext.Exhibits.SingleOrDefault(e => e.Id == newExhibitId);
+        if (newExhibit == null)
+        {
+            return NotFound("Exhibit not found.");
+        }
+
+        if (newExhibit.UserProfileId == loggedInUserId)
+        {
+
+            existingItem.Approved = true;
+            existingItem.NeedsApproval = false;
+        }
+        else
+        {
+
+            existingItem.NeedsApproval = true;
+            existingItem.Approved = false;
+        }
+
+
+        existingItem.ExhibitId = newExhibitId;
+        _dbContext.Entry(existingItem).State = EntityState.Modified;
+        _dbContext.SaveChanges();
+
+        return NoContent();
+    }
 }
