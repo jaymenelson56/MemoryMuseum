@@ -30,6 +30,15 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
             <Collapse isOpen={open} navbar>
               <Nav navbar>
                 <NavItem>
+                  <NavLink tag={RRNavLink} to={`/userprofiles/${loggedInUser.id}`}>
+                    Signed in as: <b>{loggedInUser.userName}</b>
+                  </NavLink>
+                </NavItem><NavItem>
+                  <NavLink tag={RRNavLink} to="/exhibits">
+                    Exhibits
+                  </NavLink>
+                </NavItem>
+                <NavItem>
                   <NavLink tag={RRNavLink} to="/exhibits">
                     Exhibits
                   </NavLink>
