@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   Button,
   Card,
@@ -75,12 +75,12 @@ export const ReportDetails = () => {
           )}
           <CardBody>
             <CardHeader>
-              Subject: <b>{report?.reportSubject}</b>
+              Subject: <Link to={`/userprofiles/${report.reportSubjectId}`}><b>{report?.reportSubject}</b></Link>
             </CardHeader>
 
             <ListGroup flush>
               <ListGroupItem>
-                Author: <b>{report?.reportAuthor}</b>
+                Author: <Link to={`/userprofiles/${report.reportAuthorId}`}><b>{report?.reportAuthor}</b></Link>
               </ListGroupItem>
               <ListGroupItem>
                 Issue: <b>{report?.body}</b>

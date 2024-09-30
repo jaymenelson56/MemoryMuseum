@@ -8,23 +8,23 @@
 
 .exhibits-card {
     width: 80%;
-    margin: 0 auto; /* Centers the card itself */
-    text-align: center; /* Centers text inside the card */
+    margin: 0 auto; 
+    text-align: center; 
     margin-top: 20px;
 }
 
 .centered-list {
-    list-style-type: disc; /* Ensures bullet points are shown */
-    list-style-position: inside; /* Ensures bullets are inside the list */
-    padding: 0; /* Removes default padding */
-    text-align: center; /* Centers the text and bullets */
-    margin: 0; /* Removes any default margin */
+    list-style-type: disc; 
+    list-style-position: inside; 
+    padding: 0; 
+    text-align: center; 
+    margin: 0; 
 }
 
 .centered-list li {
     
-    margin: 5px 0; /* Adds vertical space between list items */
-    text-align: center; /* Centers text within the list item */
+    margin: 5px 0; 
+    text-align: center; 
 }
 .right-align {
     display: flex;
