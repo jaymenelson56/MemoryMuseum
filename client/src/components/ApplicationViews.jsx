@@ -29,7 +29,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           element={
             <AuthorizedRoute loggedInUser={loggedInUser}>
               <InactiveRoute loggedInUser={loggedInUser}>
-                <Home loggedInUser={loggedInUser}/>
+                <Home loggedInUser={loggedInUser} />
               </InactiveRoute>
             </AuthorizedRoute>
           }
@@ -142,10 +142,9 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           index
           element={
             <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
-                <InactiveRoute loggedInUser={loggedInUser}>
-                  <ReportList />
-                </InactiveRoute>
-              
+              <InactiveRoute loggedInUser={loggedInUser}>
+                <ReportList />
+              </InactiveRoute>
             </AuthorizedRoute>
           }
         />
@@ -165,6 +164,18 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             <AuthorizedRoute loggedInUser={loggedInUser}>
               <InactiveRoute loggedInUser={loggedInUser}>
                 <CreateReport loggedInUser={loggedInUser} />
+              </InactiveRoute>
+            </AuthorizedRoute>
+          }
+        />
+      </Route>
+      <Route path="/manage-admins">
+        <Route
+          index
+          element={
+            <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
+              <InactiveRoute loggedInUser={loggedInUser}>
+                <ReportList />
               </InactiveRoute>
             </AuthorizedRoute>
           }

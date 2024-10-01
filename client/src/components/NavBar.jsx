@@ -14,8 +14,30 @@ import { logout } from "../managers/authManager";
 
 export default function NavBar({ loggedInUser, setLoggedInUser }) {
   const [open, setOpen] = useState(false);
+  const [showMore, setShowMore] = useState(false);
 
   const toggleNavbar = () => setOpen(!open);
+  const toggleShowMore = () => setShowMore(!showMore);
+
+  const visibleItems = [
+    {
+      to: `/userprofiles/${loggedInUser.id}`,
+      text: `Signed in as: ${loggedInUser.userName}`,
+    },
+    { to: "/exhibits", text: "Exhibits" },
+    { to: "/item", text: "Create Item" },
+    { to: "/storage-room", text: "Storage Room" },
+  ];
+
+  const additionalItems = [
+    { to: "/userprofiles", text: "User List" },
+    ...(loggedInUser.roles.includes("Admin")
+      ? [
+          { to: "/reports", text: "Reports" },
+          { to: "/manage-admins", text: "Staff Room" },
+        ]
+      : []),
+  ];
 
   return (
     <div>
@@ -25,48 +47,29 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
         </NavbarBrand>
         {loggedInUser ? (
           <>
-          
             <NavbarToggler onClick={toggleNavbar} />
             <Collapse isOpen={open} navbar>
               <Nav navbar>
-                <NavItem>
-                  <NavLink tag={RRNavLink} to={`/userprofiles/${loggedInUser.id}`}>
-                    Signed in as: <b>{loggedInUser.userName}</b>
-                  </NavLink>
-                </NavItem><NavItem>
-                  <NavLink tag={RRNavLink} to="/exhibits">
-                    Exhibits
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={RRNavLink} to="/exhibits">
-                    Exhibits
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={RRNavLink} to="/item">
-                    Create Item
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={RRNavLink} to="/storage-room">
-                    Storage Room
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink tag={RRNavLink} to="/userprofiles">
-                    User List
-                  </NavLink>
-                </NavItem>
-                {loggedInUser.roles.includes("Admin") && (
-                  <>
-                    <NavItem>
-                      <NavLink tag={RRNavLink} to="/reports">
-                        Reports
+                {visibleItems.map((item, index) => (
+                  <NavItem key={index}>
+                    <NavLink tag={RRNavLink} to={item.to}>
+                      {item.text}
+                    </NavLink>
+                  </NavItem>
+                ))}
+                {showMore &&
+                  additionalItems.map((item, index) => (
+                    <NavItem key={index}>
+                      <NavLink tag={RRNavLink} to={item.to}>
+                        {item.text}
                       </NavLink>
                     </NavItem>
-                  </>
-                )}
+                  ))}
+                <NavItem>
+                  <Button color="link" onClick={toggleShowMore}>
+                    {showMore ? "Show Less" : "More"}
+                  </Button>
+                </NavItem>
               </Nav>
             </Collapse>
             <Button
