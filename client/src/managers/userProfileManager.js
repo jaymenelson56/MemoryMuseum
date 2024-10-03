@@ -17,3 +17,27 @@ export const toggleUserIsActive = (id) => {
     method: "PUT",
   }).then((res) => res.json());
 };
+
+export const promoteUser = (userId, id) => {
+  return fetch(`${_apiUrl}/promote/${userId}?profileId=${id}`, {
+    method: "Post",
+  });
+};
+
+export const demoteUser = (userId, id) => {
+  return fetch(`${_apiUrl}/demote/${userId}?adminId=${id}`, {
+    method: "POST",
+  });
+};
+
+export const requestUser = (userId, adminId) => {
+  return fetch(`${_apiUrl}/${userId}/request?approverId=${adminId}`, {
+    method: "PUT",
+  });
+};
+
+export const denyUser = (userId) => {
+  return fetch(`${_apiUrl}/${userId}/deny`, {
+    method: "PUT",
+  });
+};

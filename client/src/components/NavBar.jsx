@@ -21,8 +21,8 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
 
   const visibleItems = [
     {
-      to: `/userprofiles/${loggedInUser.id}`,
-      text: `Signed in as: ${loggedInUser.userName}`,
+      to: `/userprofiles/${loggedInUser?.id}`,
+      text: `Signed in as: ${loggedInUser?.userName}`,
     },
     { to: "/exhibits", text: "Exhibits" },
     { to: "/item", text: "Create Item" },
@@ -31,7 +31,7 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
 
   const additionalItems = [
     { to: "/userprofiles", text: "User List" },
-    ...(loggedInUser.roles.includes("Admin")
+    ...(loggedInUser?.roles.includes("Admin")
       ? [
           { to: "/reports", text: "Reports" },
           { to: "/manage-admins", text: "Staff Room" },

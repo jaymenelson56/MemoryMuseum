@@ -28,6 +28,8 @@ namespace MemoryMuseum.Models
         public string Email { get; set; }
 
         public bool IsActive { get; set; }
+        public bool AdminApproved { get; set; }
+        public int? AdminApprovedId { get; set; }
 
         [NotMapped]
         public List<string> Roles { get; set; }

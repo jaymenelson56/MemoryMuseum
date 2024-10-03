@@ -81,6 +81,8 @@ public class AuthController : ControllerBase
                     UserName = user.UserName,
                     Email = user.Email,
                     IsActive = userProfile.IsActive,
+                    AdminApproved = userProfile.AdminApproved,
+                    AdminApprovedId = userProfile.AdminApprovedId,
                     Roles = userRoles.Select(ur => _dbContext.Roles.FirstOrDefault(r => r.Id == ur.RoleId)?.Name).ToList()
                 };
 
@@ -134,7 +136,9 @@ public class AuthController : ControllerBase
                 UserName = User.FindFirstValue(ClaimTypes.Name),
                 Email = User.FindFirstValue(ClaimTypes.Email),
                 Roles = roles,
-                IsActive = profile.IsActive
+                IsActive = profile.IsActive,
+                AdminApproved = profile.AdminApproved,
+                AdminApprovedId = profile.AdminApprovedId
             };
 
             return Ok(userDto);
@@ -170,6 +174,8 @@ public class AuthController : ControllerBase
                 IdentityUserId = user.Id,
                 CreateDateTime = DateTime.Now,
                 IsActive = true,
+                AdminApproved = false,
+                AdminApprovedId = 0,
             });
             _dbContext.SaveChanges();
 
