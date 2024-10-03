@@ -19,6 +19,7 @@ import { InactivePage } from "./auth/InActivePage";
 import { ReportList } from "./Report/ReportList";
 import { ReportDetails } from "./Report/ReportDetails";
 import { CreateReport } from "./Report/CreateReport";
+import { ManageAdmins } from "./UserProfiles/ManageAdmins";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -175,7 +176,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           element={
             <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
               <InactiveRoute loggedInUser={loggedInUser}>
-                <ReportList />
+                <ManageAdmins />
               </InactiveRoute>
             </AuthorizedRoute>
           }

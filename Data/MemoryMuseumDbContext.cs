@@ -103,7 +103,9 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
             LastName = "Chaka",
             Address = "101 Dalmations",
             CreateDateTime = new DateTime(2024, 1, 1, 14, 30, 0),
-            IsActive = true
+            IsActive = true,
+            AdminApproved = false,
+            AdminApprovedId = 0
         },
         new UserProfile
         {
@@ -113,7 +115,9 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
             LastName = "Chaka",
             Address = "101 Dalmations",
             CreateDateTime = new DateTime(2024, 1, 1, 14, 30, 0),
-            IsActive = true
+            IsActive = true,
+            AdminApproved = false,
+            AdminApprovedId = 0
         },
         new UserProfile
         {
@@ -123,7 +127,9 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
             LastName = "Gaba",
             Address = "101 Dalmations",
             CreateDateTime = new DateTime(2024, 6, 1, 14, 30, 0),
-            IsActive = true
+            IsActive = true,
+            AdminApproved = false,
+            AdminApprovedId = 0
         },
         new UserProfile
         {
@@ -133,7 +139,9 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
             LastName = "Noodle",
             Address = "101 Ramen Way",
             CreateDateTime = new DateTime(2024, 8, 1, 14, 30, 0),
-            IsActive = false
+            IsActive = false,
+            AdminApproved = false,
+            AdminApprovedId = 0
         },
         new UserProfile
         {
@@ -143,7 +151,9 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
             LastName = "Campana",
             Address = "101 Bell Blvd",
             CreateDateTime = new DateTime(2024, 8, 1, 14, 30, 0),
-            IsActive = false
+            IsActive = false,
+            AdminApproved = false,
+            AdminApprovedId = 0
         },
 
    });

@@ -18,7 +18,8 @@ public class UserProfileDTO
 
     public bool IsActive { get; set; }
 
-
+    public bool AdminApproved { get; set; }
+    public int? AdminApprovedId { get; set; }
     public string IdentityUserId { get; set; }
 
     public IdentityUser IdentityUser { get; set; }
