@@ -41,3 +41,7 @@ export const denyUser = (userId) => {
     method: "PUT",
   });
 };
+
+export const getUsersWithRoles = () => {
+  return fetch(_apiUrl + "/UsersWithRoles").then((res) => res.json());
+};

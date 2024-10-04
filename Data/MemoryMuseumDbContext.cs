@@ -135,8 +135,8 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
         {
             Id = 4,
             IdentityUserId = "c806cfae-bda9-47c5-8473-dd52fd056a9b",
-            FirstName = "Angry",
-            LastName = "Noodle",
+            FirstName = "Bongo",
+            LastName = "Chaka",
             Address = "101 Ramen Way",
             CreateDateTime = new DateTime(2024, 8, 1, 14, 30, 0),
             IsActive = false,
@@ -147,8 +147,8 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
         {
             Id = 5,
             IdentityUserId = "9ce89d88-75da-4a80-9b0d-3fe58582b8e2",
-            FirstName = "La",
-            LastName = "Campana",
+            FirstName = "Jerry",
+            LastName = "Chaka",
             Address = "101 Bell Blvd",
             CreateDateTime = new DateTime(2024, 8, 1, 14, 30, 0),
             IsActive = false,
