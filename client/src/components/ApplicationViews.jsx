@@ -176,7 +176,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           element={
             <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
               <InactiveRoute loggedInUser={loggedInUser}>
-                <ManageAdmins />
+                <ManageAdmins loggedInUser={loggedInUser}/>
               </InactiveRoute>
             </AuthorizedRoute>
           }

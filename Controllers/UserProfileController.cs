@@ -216,4 +216,38 @@ public class UserProfileController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpGet("UsersWithRoles")]
+    // [Authorize]
+    public IActionResult GetActiveUsersWithRoles()
+    {
+        List<UserProfile> activeUsers = _dbContext.UserProfiles
+            .Where(up => up.IsActive)
+            .Include(up => up.IdentityUser)
+            .Select(up => new UserProfile
+            {
+                Id = up.Id,
+                FirstName = up.FirstName,
+                LastName = up.LastName,
+                Address = up.Address,
+                IsActive = up.IsActive,
+                AdminApproved = up.AdminApproved,
+                AdminApprovedId = up.AdminApprovedId,
+                CreateDateTime = up.CreateDateTime,
+                Email = up.IdentityUser.Email,
+                UserName = up.IdentityUser.UserName,
+                IdentityUserId = up.IdentityUserId,
+                Roles = _dbContext.UserRoles
+                    .Where(ur => ur.UserId == up.IdentityUserId)
+                    .Select(ur => _dbContext.Roles
+                        .Where(r => r.Id == ur.RoleId)
+                        .Select(r => r.Name)
+                        .Single())
+                    .ToList()
+            })
+            .ToList();
+
+        return Ok(activeUsers);
+    }
+
 }
