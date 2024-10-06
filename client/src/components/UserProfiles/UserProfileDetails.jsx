@@ -40,6 +40,10 @@ export const UserProfileDetails = ({ loggedInUser }) => {
 
   const handleToggleStatus = async () => {
     try {
+      if (isAdmin && isActive) {
+        alert("Unable to deactivate admins. You must demote admins before deactivating them.");
+        return;
+      }
       await toggleUserIsActive(id);
 
       const updatedProfile = await getUsersById(id);

@@ -27,11 +27,11 @@ export const ManageAdmins = ({ loggedInUser }) => {
       if (roles.includes("Admin")) {
         confirmMessage = `Are you sure you want to request demoting ${userName} to regular member?`;
       } else {
-        confirmMessage = `Are you sure you want to request promoting ${userName} to admin?`;
+        confirmMessage = `Are you sure you want to request promoting ${userName} to administrator?`;
       }
 
       if (userId === loggedInUser.id) {
-        alert("Admins cannot demote themselves.");
+        alert("Administrators cannot demote themselves.");
         return;
       }
       if (adminApproved) {
@@ -71,9 +71,9 @@ export const ManageAdmins = ({ loggedInUser }) => {
       let confirmMessage = "";
 
       if (roles.includes("Admin")) {
-        confirmMessage = `Are you sure you want to approve demotion of ${userName} from Admin to Member?`;
+        confirmMessage = `Are you sure you want to approve demotion of ${userName} from Administrator to Member?`;
       } else {
-        confirmMessage = `Are you sure you want to approve promotion of ${userName} to Admin?`;
+        confirmMessage = `Are you sure you want to approve promotion of ${userName} to Administrator?`;
       }
 
       if (!window.confirm(confirmMessage)) {
@@ -95,14 +95,23 @@ export const ManageAdmins = ({ loggedInUser }) => {
     }
   };
 
-  const handleDeny = async (userId) => {
+  const handleDeny = async (userId, roles, userName) => {
     try {
+      let confirmMessage = "";
+
+      if (roles.includes("Admin")) {
+        confirmMessage = `Are you sure you want to deny the demotion of ${userName} from Administrator to Member?`;
+      } else {
+        confirmMessage = `Are you sure you want to deny promotion of ${userName} to Administrator?`;
+      }
+
+      if (!window.confirm(confirmMessage)) {
+        return;
+      }
       await denyUser(userId);
-      alert(`it has been denied successfully.`);
+      alert(`You have denied the request.`);
       refresh();
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   };
   return (
     <>
@@ -115,7 +124,6 @@ export const ManageAdmins = ({ loggedInUser }) => {
               <th>User Type</th>
               <th>Action</th>
               <th>Status</th>
-              <th>Final Action</th>
             </tr>
           </thead>
           <tbody>
@@ -156,35 +164,39 @@ export const ManageAdmins = ({ loggedInUser }) => {
                     </Button>
                   )}
                 </td>
-                <td>{u.adminApproved ? "Pending" : ""}</td>
                 <td>
-                  {u.adminApproved && u.adminApprovedId !== loggedInUser.id && u.id !== loggedInUser.id && (
-                    <div>
-                    <Button
-                      color="primary"
-                      onClick={() =>
-                        handleApproval(
-                          u.identityUserId,
-                          loggedInUser.id,
-                          u.userName,
-                          u.roles
-                        )
-                      }
-                    >
-                      Approve
-                    </Button>
-                     
-                    <Button
-                    color="primary"
-                    onClick={() =>
-                      handleDeny(u.id)
-                    }
-                  >
-                    Deny
-                  </Button>
-                  </div>
+                  {u.adminApproved ? (
+                    u.adminApprovedId !== loggedInUser.id &&
+                    u.id !== loggedInUser.id ? (
+                      <div>
+                        <Button
+                          color="primary"
+                          onClick={() =>
+                            handleApproval(
+                              u.identityUserId,
+                              u.id,
+                              u.userName,
+                              u.roles
+                            )
+                          }
+                        >
+                          Approve
+                        </Button>
+                        <Button
+                          color="warning"
+                          onClick={() => handleDeny(u.id, u.roles, u.userName)}
+                        >
+                          Deny
+                        </Button>
+                      </div>
+                    ) : (
+                      "pending"
+                    )
+                  ) : (
+                    ""
                   )}
                 </td>
+                
               </tr>
             ))}
           </tbody>
