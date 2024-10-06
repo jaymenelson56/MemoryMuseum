@@ -105,9 +105,10 @@ public class UserProfileController : ControllerBase
     }
 
     [HttpPut("ToggleIsActive/{id}")]
+    [Authorize(Roles = "Admin")]
     public IActionResult ToggleIsActive(int id)
     {
-        var userProfile = _dbContext.UserProfiles.FirstOrDefault(up => up.Id == id);
+        UserProfile userProfile = _dbContext.UserProfiles.FirstOrDefault(up => up.Id == id);
 
         if (userProfile == null)
         {
