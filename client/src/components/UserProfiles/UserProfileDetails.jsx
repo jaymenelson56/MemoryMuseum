@@ -23,6 +23,7 @@ import "./UserProfile.css";
 export const UserProfileDetails = ({ loggedInUser }) => {
   const [userProfile, setUserProfile] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
+  const [isAdminAlertOpen, setIsAdminAlertOpen] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -41,7 +42,7 @@ export const UserProfileDetails = ({ loggedInUser }) => {
   const handleToggleStatus = async () => {
     try {
       if (isAdmin && isActive) {
-        alert("Unable to deactivate admins. You must demote admins before deactivating them.");
+        setIsAdminAlertOpen(true);
         return;
       }
       await toggleUserIsActive(id);
@@ -120,6 +121,26 @@ export const UserProfileDetails = ({ loggedInUser }) => {
                         </Button>{" "}
                         <Button color="secondary" onClick={toggleModal}>
                           No
+                        </Button>
+                      </ModalFooter>
+                    </Modal>
+
+                    <Modal
+                      isOpen={isAdminAlertOpen}
+                      toggle={() => setIsAdminAlertOpen(!isAdminAlertOpen)}
+                    >
+                      <ModalHeader toggle={() => setIsAdminAlertOpen(!isAdminAlertOpen)}>
+                        Administrator Deactivation Blocked
+                      </ModalHeader>
+                      <ModalBody>
+                        Unable to deactivate administrators. You must demote administrators before deactivating them.
+                      </ModalBody>
+                      <ModalFooter>
+                        <Button
+                          color="secondary"
+                          onClick={() => setIsAdminAlertOpen(!isAdminAlertOpen)}
+                        >
+                          Close
                         </Button>
                       </ModalFooter>
                     </Modal>

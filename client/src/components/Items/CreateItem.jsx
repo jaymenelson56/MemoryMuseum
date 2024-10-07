@@ -62,51 +62,66 @@ export const CreateItem = ({ loggedInUser }) => {
     return (
         <>
             <Card className="transparent-card">
+                
                 <h2>Create an Item</h2>
                 <Form onSubmit={handleSubmit}>
-                    <FormGroup>
-                        <Label><h4>Name</h4></Label>
+                    <FormGroup className ="d-flex flex-column align-items-center">
+                        <Label htmlFor="name" className="me-2"><h4>Name: </h4></Label>
+                        <div className="col-6">
                         <Input
                             type="text"
+                            id="name"
                             value={name}
                             onChange={(e) => {
                                 setName(e.target.value);
                             }}
                             required
                         />
+                        </div>
                     </FormGroup>
-                    <FormGroup>
-                        <Label><h4>Image</h4></Label>
+                    <FormGroup className ="d-flex flex-column align-items-center">
+                        <Label htmlFor="image" className="me-2"><h4>Image:</h4></Label>
+                        <div className="col-6">
                         <Input
                             type="file"
+                            id="image"
                             onChange={fileSelectedHandler}
                         />
+                        </div>
                     </FormGroup>
-                    <FormGroup>
-                        <Label><h4>Or Enter Image URL</h4></Label>
+                    <FormGroup className ="d-flex flex-column align-items-center">
+                        <Label htmlFor="image" className="me-2"><h4>Or Enter Image URL: </h4></Label>
+                        <div className="col-6">
                         <Input
                             type="text"
+                            id="image"
                             value={imageUrl}
                             onChange={(e) => {
                                 setImageUrl(e.target.value);
                             }}
                         />
+                        </div>
                     </FormGroup>
-                    <FormGroup>
-                        <Label><h4>Placard</h4></Label>
+                    <FormGroup className ="d-flex flex-column align-items-center">
+                        <Label htmlFor="placard" className="me-2"><h4>Placard:</h4></Label>
+                        <div className="col-6">
                         <Input
                             type="textarea"
+                            id="placard"
                             value={placard}
                             onChange={(e) => {
                                 setPlacard(e.target.value);
                             }}
                             required
                         />
+                        </div>
                     </FormGroup>
-                    <FormGroup>
-                        <Label><h4>Exhibit</h4></Label>
+                    <FormGroup className ="d-flex flex-column align-items-center">
+                        <Label htmlFor="exhibit" className="me-2"><h4>Exhibit:</h4></Label>
+                        <div className="col-6">
                         <Input
                             type="select"
+                            id="exhibit"
                             value={exhibitId}
                             onChange={(e) => {
                                 setExhibitId(parseInt(e.target.value));
@@ -117,9 +132,10 @@ export const CreateItem = ({ loggedInUser }) => {
                                 <option key={ex.id} value={ex.id}>{ex.name}</option>
                             ))}
                         </Input>
+                        </div>
                     </FormGroup>
-                    <Button type="submit">Submit</Button><p> </p>
-                    <Button type="button" onClick={handleBack}>Back</Button>
+                    <Button color="primary" type="submit">Submit</Button><p> </p>
+                    <Button  type="button" onClick={handleBack}>Back</Button>
                 </Form>
             </Card>
         </>

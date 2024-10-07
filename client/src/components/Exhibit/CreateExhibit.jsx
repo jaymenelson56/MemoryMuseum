@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { newExhibit } from "../../managers/exhibitManager";
-import { Card } from "reactstrap";
+import { Card, Form, FormGroup, Input, Label } from "reactstrap";
 
 //Header
 export const CreateExhibit = ({ loggedInUser }) => {
@@ -28,22 +28,26 @@ export const CreateExhibit = ({ loggedInUser }) => {
         <>
             <Card className="transparent-card">
                 <h2>Create New Exhibit</h2>
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor="name">Name:</label>
-                    <input
+                <Form onSubmit={handleSubmit}>
+                    <FormGroup className ="d-flex flex-column align-items-center">
+                    <div><Label htmlFor="name" className="me-2"><h4>Name:</h4></Label></div>
+                    <div className="col-6">
+                    <Input
                         type="text"
                         id="name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
                     />
+                    </div>
+                    </FormGroup>
                     <button type="submit" className="btn btn-primary">
                         Submit
                     </button>
                     <button type="button" className="btn btn-secondary" onClick={handleBack}>
                         Back
                     </button>
-                </form>
+                </Form>
             </Card>
         </>
     )
