@@ -1,10 +1,11 @@
 ## Memory Museum
 
-In the future, A.I. will run everything, and the things we enjoy will be a distant memory. With this Memory Museum application we can turn our collections of everything we enjoy about this century, and perfectly preserve it online with a description of what it meant to us, to give the future a peek into the window of our lives back then. This museum will house exhibits that will demonstrate what objects of our time mean to us.  As a registered user you can...
+In the future, A.I. will run everything, and the things we enjoy will be a distant memory. With this Memory Museum application we can turn our collections of everything we enjoy about this century, and perfectly preserve it online with a description of what it meant to us, to give the future a peek into the window of our lives back then. This museum will house exhibits that will demonstrate what objects of our time mean to us.  Registered users can...
 
 * View the various exhibits
 * View the various items within the exhibit
 * Create their own exhibit
+* Submit items to other users' exhibits
 * Approve/Reject items submitted to their exhibit
 * Delete their own exhibits
 * Upload their own items
@@ -12,6 +13,13 @@ In the future, A.I. will run everything, and the things we enjoy will be a dista
 * Delete their own Items
 * Rate other users Exhibits
 * View the average rating of your exhibit
+
+As an Admin you can do all this plus...
+
+* Deactivate active users and reactivate deactivated users
+* View list of deactivated users
+* View and manage reports made by other users
+* Manage your team of moderators with other Administrators
 
 ## How to install
 To install follow the steps below
