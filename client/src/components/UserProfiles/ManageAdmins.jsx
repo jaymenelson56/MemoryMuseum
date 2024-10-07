@@ -25,9 +25,9 @@ export const ManageAdmins = ({ loggedInUser }) => {
       let confirmMessage = "";
 
       if (roles.includes("Admin")) {
-        confirmMessage = `Are you sure you want to request demoting ${userName} to regular member?`;
+        confirmMessage = `You are about to make a request to demote a user. Another Administrator will have to approve your request. Are you sure you want to request relieving ${userName} of their administrative duties?`;
       } else {
-        confirmMessage = `Are you sure you want to request promoting ${userName} to administrator?`;
+        confirmMessage = `You are about to make a request to promote a user. Another Administrator will have to approve your request. Are you sure you want to request promoting ${userName} to administrator?`;
       }
 
       if (userId === loggedInUser.id) {
@@ -71,7 +71,7 @@ export const ManageAdmins = ({ loggedInUser }) => {
       let confirmMessage = "";
 
       if (roles.includes("Admin")) {
-        confirmMessage = `Are you sure you want to approve demotion of ${userName} from Administrator to Member?`;
+        confirmMessage = `Are you sure you want to approve relieving of ${userName} of their administrative duties?`;
       } else {
         confirmMessage = `Are you sure you want to approve promotion of ${userName} to Administrator?`;
       }
@@ -82,7 +82,7 @@ export const ManageAdmins = ({ loggedInUser }) => {
 
       if (roles.includes("Admin")) {
         await approveDemotion(userIdNumber, userId);
-        alert(`${userName} has been demoted successfully.`);
+        alert(`${userName} has relieved of their administrative duties successfully.`);
       } else {
         await approvePromotion(userIdNumber, userId);
         alert(`${userName} has been promoted successfully.`);
@@ -100,7 +100,7 @@ export const ManageAdmins = ({ loggedInUser }) => {
       let confirmMessage = "";
 
       if (roles.includes("Admin")) {
-        confirmMessage = `Are you sure you want to deny the demotion of ${userName} from Administrator to Member?`;
+        confirmMessage = `Are you sure you want to deny ${userName} relief from their administrative duties?`;
       } else {
         confirmMessage = `Are you sure you want to deny promotion of ${userName} to Administrator?`;
       }
