@@ -129,6 +129,9 @@ export const ExhibitHall = ({ loggedInUser }) => {
                                 </Form>
                             </Card>
                         )}
+                        <Link to={"/exhibits"}>
+                        Back to Exhibit Menu
+                    </Link>
                     </Card>
                 )}
             </footer>
