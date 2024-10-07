@@ -29,7 +29,7 @@ export const CreateExhibit = ({ loggedInUser }) => {
             <Card className="transparent-card">
                 <h2>Create New Exhibit</h2>
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor="name">Name</label>
+                    <label htmlFor="name">Name:</label>
                     <input
                         type="text"
                         id="name"

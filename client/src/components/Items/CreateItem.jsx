@@ -65,7 +65,7 @@ export const CreateItem = ({ loggedInUser }) => {
                 <h2>Create an Item</h2>
                 <Form onSubmit={handleSubmit}>
                     <FormGroup>
-                        <Label>Name</Label>
+                        <Label><h4>Name</h4></Label>
                         <Input
                             type="text"
                             value={name}
@@ -76,14 +76,14 @@ export const CreateItem = ({ loggedInUser }) => {
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label>Image</Label>
+                        <Label><h4>Image</h4></Label>
                         <Input
                             type="file"
                             onChange={fileSelectedHandler}
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label>Or Enter Image URL</Label>
+                        <Label><h4>Or Enter Image URL</h4></Label>
                         <Input
                             type="text"
                             value={imageUrl}
@@ -93,7 +93,7 @@ export const CreateItem = ({ loggedInUser }) => {
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label>Placard</Label>
+                        <Label><h4>Placard</h4></Label>
                         <Input
                             type="textarea"
                             value={placard}
@@ -104,7 +104,7 @@ export const CreateItem = ({ loggedInUser }) => {
                         />
                     </FormGroup>
                     <FormGroup>
-                        <Label>Exhibit</Label>
+                        <Label><h4>Exhibit</h4></Label>
                         <Input
                             type="select"
                             value={exhibitId}
