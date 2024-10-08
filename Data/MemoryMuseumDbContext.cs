@@ -277,7 +277,7 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
         new Item
         {
             Id = 8,
-            Image = "/images/chung.jpg",
+            Image = "/images/turkey.jpg",
             Name = "A Turkey",
             UserProfileId = 5,
             ExhibitId = 4,
@@ -289,7 +289,7 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
         new Item
         {
             Id = 9,
-            Image = "/images/chung.jpg",
+            Image = "/images/beads.jpg",
             Name = "A Turkey",
             UserProfileId = 3,
             ExhibitId = 4,
