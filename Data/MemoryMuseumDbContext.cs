@@ -57,15 +57,15 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
                 new IdentityUser
                 {
                     Id = "c806cfae-bda9-47c5-8473-dd52fd056a9b",
-                    UserName = "AngryNoodle",
-                    Email = "angry@noodle.comx",
+                    UserName = "BongoGaba",
+                    Email = "bongo@gaba.comx",
                     PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, _configuration["AdminPassword"])
                 },
                 new IdentityUser
                 {
                     Id = "9ce89d88-75da-4a80-9b0d-3fe58582b8e2",
-                    UserName = "LaCampana",
-                    Email = "la@campana.comx",
+                    UserName = "JerryGaba",
+                    Email = "jerry@gaba.comx",
                     PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(null, _configuration["AdminPassword"])
                 },
         });
@@ -259,6 +259,42 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
             ExhibitId = 3,
             Placard = "I am pretty sure this is Gumby.",
             DatePublished = new DateTime(2024, 6, 2, 14, 30, 0),
+            NeedsApproval = false,
+            Approved = true
+        },
+        new Item
+        {
+            Id = 7,
+            Image = "/images/chung.jpg",
+            Name = "Big Chungus",
+            UserProfileId = 4,
+            ExhibitId = 4,
+            Placard = "I am pretty sure this is Bugs Bunny.",
+            DatePublished = new DateTime(2024, 8, 1, 14, 30, 0),
+            NeedsApproval = false,
+            Approved = true
+        },
+        new Item
+        {
+            Id = 8,
+            Image = "/images/chung.jpg",
+            Name = "A Turkey",
+            UserProfileId = 5,
+            ExhibitId = 4,
+            Placard = "I am pretty sure this is a turkey.",
+            DatePublished = new DateTime(2024, 8, 1, 14, 30, 0),
+            NeedsApproval = false,
+            Approved = true
+        },
+        new Item
+        {
+            Id = 9,
+            Image = "/images/chung.jpg",
+            Name = "A Turkey",
+            UserProfileId = 3,
+            ExhibitId = 4,
+            Placard = "I am pretty sure this is beads.",
+            DatePublished = new DateTime(2024, 8, 1, 14, 30, 0),
             NeedsApproval = false,
             Approved = true
         },
