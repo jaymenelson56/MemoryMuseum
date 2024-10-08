@@ -265,7 +265,7 @@ public class MemoryMuseumDbContext : IdentityDbContext<IdentityUser>
         new Item
         {
             Id = 7,
-            Image = "/images/chung.jpg",
+            Image = "/images/chung.png",
             Name = "Big Chungus",
             UserProfileId = 4,
             ExhibitId = 4,
