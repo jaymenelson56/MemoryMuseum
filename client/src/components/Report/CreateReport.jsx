@@ -15,6 +15,7 @@ import {
 import "./Report.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { newReport } from "../../managers/reportmanager";
+import { PropTypes } from "prop-types"
 
 export const CreateReport = ({ loggedInUser }) => {
   const [issue, setIssue] = useState("");
@@ -94,4 +95,10 @@ export const CreateReport = ({ loggedInUser }) => {
       </Modal>
     </>
   );
+};
+CreateReport.propTypes = {
+    loggedInUser: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        userName: PropTypes.string.isRequired
+    }).isRequired
 };

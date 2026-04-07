@@ -16,6 +16,7 @@ import {
   requestUser,
 } from "../../managers/userProfileManager";
 import { Link } from "react-router-dom";
+import { PropTypes } from "pro-types"
 
 export const ManageAdmins = ({ loggedInUser }) => {
   const [users, setUsers] = useState([]);
@@ -227,4 +228,9 @@ export const ManageAdmins = ({ loggedInUser }) => {
       </Modal>
     </>
   );
+};
+ManageAdmins.propTypes = {
+    loggedInUser: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+    }).isRequired
 };

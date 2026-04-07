@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Card, FormFeedback, FormGroup, Input, Label } from "reactstrap";
 import { login } from "../../managers/authManager";
+import PropTypes from "prop-types";
 
 
 export default function Login({ setLoggedInUser }) {
@@ -62,3 +63,6 @@ export default function Login({ setLoggedInUser }) {
     </div>
   );
 }
+Login.propTypes = {
+  setLoggedInUser: PropTypes.func.isRequired,
+};

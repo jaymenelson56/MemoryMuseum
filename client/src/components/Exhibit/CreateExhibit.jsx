@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { newExhibit } from "../../managers/exhibitManager";
 import { Card, Form, FormGroup, Input, Label } from "reactstrap";
+import PropTypes from "prop-types";
 
 //Header
 export const CreateExhibit = ({ loggedInUser }) => {
@@ -54,3 +55,8 @@ export const CreateExhibit = ({ loggedInUser }) => {
 }
 
 
+CreateExhibit.propTypes = {
+    loggedInUser: PropTypes.shape({
+        id: PropTypes.number.isRequired
+    }).isRequired
+};

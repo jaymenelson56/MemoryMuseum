@@ -1,5 +1,5 @@
-import React from 'react';
 import { Card } from 'reactstrap';
+import { PropTypes } from "prop-types"
 
 function Home({ loggedInUser }) {
   return (
@@ -11,5 +11,10 @@ function Home({ loggedInUser }) {
     </div>
   );
 }
+Home.propTypes = {
+    loggedInUser: PropTypes.shape({
+        firstName: PropTypes.string.isRequired,
+    }).isRequired
+};
 
 export default Home;

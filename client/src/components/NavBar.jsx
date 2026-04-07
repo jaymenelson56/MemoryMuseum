@@ -11,6 +11,7 @@ import {
   NavbarToggler,
 } from "reactstrap";
 import { logout } from "../managers/authManager";
+import { PropTypes } from "prop-types"
 
 export default function NavBar({ loggedInUser, setLoggedInUser }) {
   const [open, setOpen] = useState(false);
@@ -99,3 +100,11 @@ export default function NavBar({ loggedInUser, setLoggedInUser }) {
     </div>
   );
 }
+NavBar.propTypes = {
+  loggedInUser: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    userName: PropTypes.string.isRequired,
+    roles: PropTypes.arrayOf(PropTypes.string),
+  }).isRequired,
+  setLoggedInUser: PropTypes.func.isRequired,
+};

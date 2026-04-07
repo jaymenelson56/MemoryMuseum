@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { deleteItem, getItem } from "../../managers/itemManager";
-import { Button, Card, CardBody, CardFooter, CardImg, CardText, CardTitle } from "reactstrap";
+import { Button, Card, CardBody, CardFooter, CardImg, CardTitle } from "reactstrap";
+import { PropTypes } from "prop-types"
 
 export const ItemDetails = ({ loggedInUser }) => {
     const [item, setItem] = useState({});
@@ -63,3 +64,8 @@ export const ItemDetails = ({ loggedInUser }) => {
     )
 }
 
+ItemDetails.propTypes = {
+    loggedInUser: PropTypes.shape({
+        id: PropTypes.number.isRequired
+    }).isRequired
+};

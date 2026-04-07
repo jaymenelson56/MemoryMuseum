@@ -4,6 +4,7 @@ import { Button, Card, Form, FormGroup, Input, Label } from "reactstrap";
 import { newItem } from "../../managers/itemManager"
 import { getExhibits } from "../../managers/exhibitManager";
 import "./Item.css";
+import PropTypes from "prop-types";
 
 export const CreateItem = ({ loggedInUser }) => {
     const [selectedFile, setSelectedFile] = useState(null);
@@ -141,3 +142,8 @@ export const CreateItem = ({ loggedInUser }) => {
         </>
     )
 }
+CreateItem.propTypes = {
+    loggedInUser: PropTypes.shape({
+        id: PropTypes.number.isRequired
+    }).isRequired
+};

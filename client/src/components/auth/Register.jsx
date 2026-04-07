@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Card, FormFeedback, FormGroup, Input, Label } from "reactstrap";
 import { register } from "../../managers/authManager";
+import PropTypes from "prop-types";
 
 export default function Register({ setLoggedInUser }) {
   const [firstName, setFirstName] = useState("");
@@ -138,3 +139,6 @@ export default function Register({ setLoggedInUser }) {
     </div>
   );
 }
+Register.propTypes = {
+  setLoggedInUser: PropTypes.func.isRequired,
+};

@@ -3,8 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getItem, updateItem } from "../../managers/itemManager";
 import { Button, Card, Form, FormGroup, Input, Label } from "reactstrap";
 
+
 //Header
-export const EditItem = ({ loggedInUser }) => {
+export const EditItem = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [name, setName] = useState("");
     const [placard, setPlacard] = useState("");

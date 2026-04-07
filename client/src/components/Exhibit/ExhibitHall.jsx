@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Button, Card, CardBody, CardColumns, CardFooter, CardGroup, CardImg, CardLink, CardText, CardTitle, Form, FormGroup, Input, Label } from "reactstrap";
+import { Button, Card, CardBody, CardColumns, CardFooter, CardImg, CardTitle, Form, FormGroup, Input, Label } from "reactstrap";
 import { NewRating, deleteExhibit, getExhibit } from "../../managers/exhibitManager";
 import { getRatings } from "../../managers/ratingManager";
 import "./Exhibit.css";
+import PropTypes from "prop-types";
 
 
 export const ExhibitHall = ({ loggedInUser }) => {
@@ -14,6 +15,12 @@ export const ExhibitHall = ({ loggedInUser }) => {
 
     const { id } = useParams();
     const navigate = useNavigate();
+
+    ExhibitHall.propTypes = {
+    loggedInUser: PropTypes.shape({
+        id: PropTypes.number.isRequired
+    }).isRequired
+};
 
     useEffect(() => {
         getExhibit(id).then(setExhibit);
@@ -86,7 +93,7 @@ export const ExhibitHall = ({ loggedInUser }) => {
                 {loggedInUser.id === exhibit.userProfileId ? (
                     <Card className="transparent-card">
                         <CardBody>
-                            <CardTitle>Your Exhibit's Average Rating: {exhibit.exhibitRatings.length > 0
+                            <CardTitle>Your Exhibit&apos;s Average Rating: {exhibit.exhibitRatings.length > 0
                                 ? `${exhibit.averageRating.toFixed(1)} out of 5`
                                 : "No ratings"
                             }</CardTitle>

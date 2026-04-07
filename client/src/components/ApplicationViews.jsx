@@ -20,6 +20,7 @@ import { ReportList } from "./Report/ReportList";
 import { ReportDetails } from "./Report/ReportDetails";
 import { CreateReport } from "./Report/CreateReport";
 import { ManageAdmins } from "./UserProfiles/ManageAdmins";
+import { PropTypes } from "prop-types"
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -102,7 +103,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
           element={
             <AuthorizedItemRoute loggedInUser={loggedInUser}>
               <InactiveRoute loggedInUser={loggedInUser}>
-                <EditItem loggedInUser={loggedInUser} />
+                <EditItem />
               </InactiveRoute>
             </AuthorizedItemRoute>
           }
@@ -188,3 +189,9 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
     </Routes>
   );
 }
+ApplicationViews.propTypes = {
+    loggedInUser: PropTypes.shape({
+        id: PropTypes.number.isRequired
+    }).isRequired,
+    setLoggedInUser: PropTypes.func.isRequired,
+};
