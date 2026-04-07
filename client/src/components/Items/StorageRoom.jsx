@@ -23,6 +23,7 @@ import {
 } from "../../managers/itemManager";
 import { Link } from "react-router-dom";
 import { getExhibits } from "../../managers/exhibitManager";
+import { PropTypes } from "prop-types"
 
 export const StorageRoom = ({ loggedInUser }) => {
   const [pendingItems, setPendingItems] = useState([]);
@@ -225,4 +226,10 @@ export const StorageRoom = ({ loggedInUser }) => {
       </Card>
     </>
   );
+};
+
+StorageRoom.propTypes = {
+    loggedInUser: PropTypes.shape({
+        id: PropTypes.number.isRequired
+    }).isRequired
 };

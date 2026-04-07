@@ -5,20 +5,19 @@ import {
   Card,
   CardBody,
   CardHeader,
-  CardTitle,
   ListGroup,
   ListGroupItem,
   Modal,
   ModalBody,
   ModalFooter,
   ModalHeader,
-  Table,
 } from "reactstrap";
 import {
   getUsersById,
   toggleUserIsActive,
 } from "../../managers/userProfileManager";
 import "./UserProfile.css";
+import { PropTypes } from "prop-types"
 
 export const UserProfileDetails = ({ loggedInUser }) => {
   const [userProfile, setUserProfile] = useState({});
@@ -165,4 +164,10 @@ export const UserProfileDetails = ({ loggedInUser }) => {
       </Card>
     </>
   );
+};
+UserProfileDetails.propTypes = {
+    loggedInUser: PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        roles: PropTypes.arrayOf(PropTypes.string),
+    }).isRequired
 };
