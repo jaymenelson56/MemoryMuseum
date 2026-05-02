@@ -48,3 +48,52 @@ Make sure the following are installed on your machine before continuing:
 10. Run the debugger
 11. In a new terminal, `cd` into the `client` folder and run `npm run dev`
 12. Once in, follow the prompts, register, and enjoy the site
+
+## Running in Dev Mode
+
+Start both the backend and frontend each time you want to run the app locally.
+
+**Backend**
+
+**Option A — VSCode debugger:** Open the Run and Debug panel (`Ctrl+Shift+D`), select **.NET Core**, and press **F5**.
+
+**Option B — terminal:** From the project root, run:
+
+```bash
+dotnet run --launch-profile https
+```
+
+Either way, the API will be available at:
+
+- `https://localhost:5001` (HTTPS — used by the frontend proxy)
+- `http://localhost:5000` (HTTP)
+
+> Tip: use `dotnet watch --launch-profile https` instead of `dotnet run` to get hot-reload on backend file changes.
+
+**Frontend**
+
+In a terminal, `cd` into the `client` folder and run:
+
+```bash
+npm run dev
+```
+
+Vite will start the dev server and automatically open the app in your browser at `http://localhost:5173`. All `/api` requests are proxied to the backend at `https://localhost:5001`.
+
+## Running a Production Preview
+
+This project does not include an `npm start` script. To preview a production build locally:
+
+1. In the `client` folder, build the app:
+
+```bash
+npm run build
+```
+
+2. Then serve the build:
+
+```bash
+npm run preview
+```
+
+The preview server runs at `http://localhost:4173` by default. Make sure the backend is still running (see above) so API calls succeed.
