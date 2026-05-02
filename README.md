@@ -1,6 +1,6 @@
-## Memory Museum
+# Memory Museum
 
-In the future, A.I. will run everything, and the things we enjoy will be a distant memory. With this Memory Museum application we can turn our collections of everything we enjoy about this century, and perfectly preserve it online with a description of what it meant to us, to give the future a peek into the window of our lives back then. This museum will house exhibits that will demonstrate what objects of our time mean to us.  Registered users can...
+In the future, A.I. will run everything, and the things we enjoy will be a distant memory. With this Memory Museum application we can turn our collections of everything we enjoy about this century, and perfectly preserve it online with a description of what it meant to us, to give the future a peek into the window of our lives back then. This museum will house exhibits that will demonstrate what objects of our time mean to us. Registered users can...
 
 * View the various exhibits
 * View the various items within the exhibit
@@ -21,18 +21,30 @@ As an Admin you can do all this plus...
 * View and manage reports made by other users
 * Manage your team of moderators with other Administrators
 
-## How to install
-To install follow the steps below
-1. Make sure bot VSCode and pgAdmin4 are installed on your machine.
-1. To pull this on your machine, open your terminal, and use the command "git clone git@github.com:jaymenelson56/MemoryMuseum.git"
-1. Run "dotnet user-secrets init"
-1. Run "dotnet user-secrets set MusuemMemoryDbConnectionString "Host=localhost;Port=5432;Username=postgres;Password=<your password>;Database=MuseumMemory", instead of "<your password> enter your postgres password
-1. Run "dotnet user-secrets set AdminPassword password" to set the first two accounts' password as "password", feel free to change it to whatever you please
-1. Run "dotnet ef migrations add InitialCreate" in your terminal.
-1. Run  "dotnet ef database update" in your terminal.
-1. Run "code ." inside the MemoryMuseum directory
-1. navgiate to the run and debug menu in vscode and make sure .NET Core is selected as your debugger.
-1. Run the debugger.
-1. In your terminal cd into the client folder.
-1. Run npm run dev in your terminal.
-1. Once in, follow the prompts, register, and enjoy the site.
+## Prerequisites
+
+Make sure the following are installed on your machine before continuing:
+
+| Tool | Download |
+|------|----------|
+| VSCode | [code.visualstudio.com](https://code.visualstudio.com/) |
+| pgAdmin 4 | [pgadmin.org/download](https://www.pgadmin.org/download/) |
+| Git | [git-scm.com/downloads](https://git-scm.com/downloads) |
+| PostgreSQL | [postgresql.org/download](https://www.postgresql.org/download/) |
+| .NET 8 SDK | [dotnet.microsoft.com/download/dotnet/8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) |
+| Node.js (includes npm) | [nodejs.org/en/download](https://nodejs.org/en/download) |
+
+## How to Install
+
+1. Open your terminal and clone the repository: `git clone git@github.com:jaymenelson56/MemoryMuseum.git`
+2. Navigate into the project directory and run `dotnet user-secrets init`
+3. Install the Entity Framework CLI tools: `dotnet tool install --global dotnet-ef`
+4. Run `dotnet user-secrets set MusuemMemoryDbConnectionString "Host=localhost;Port=5432;Username=postgres;Password=<your password>;Database=MuseumMemory"` — replace `<your password>` with your PostgreSQL password
+5. Run `dotnet user-secrets set AdminPassword password` to set the first two accounts' password to "password" (change it to whatever you prefer)
+6. Run `dotnet ef migrations add InitialCreate`
+7. Run `dotnet ef database update`
+8. Run `code .` inside the MemoryMuseum directory to open it in VSCode
+9. Navigate to the Run and Debug menu in VSCode and make sure **.NET Core** is selected as your debugger
+10. Run the debugger
+11. In a new terminal, `cd` into the `client` folder and run `npm run dev`
+12. Once in, follow the prompts, register, and enjoy the site
